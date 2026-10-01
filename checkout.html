@@ -8,7 +8,9 @@
     <title>Checkout | SSRT Rover</title>
 
     <meta name="description"
-        content="Checkout for SSRT Rover products.">
+        content="Checkout for SSRT Rover products by Space Singh Researcher Team.">
+
+    <meta name="author" content="Space Singh Researcher Team">
 
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -44,7 +46,7 @@
             <h2>Checkout</h2>
 
             <p>
-                Complete your details to create your order.
+                Complete your details to continue.
             </p>
 
         </section>
@@ -52,9 +54,10 @@
 
         <!-- CHECKOUT -->
 
-        <section class="section">
+        <section>
 
             <div class="cards">
+
 
                 <!-- CUSTOMER DETAILS -->
 
@@ -71,7 +74,6 @@
                         <input
                             type="text"
                             id="name"
-                            name="name"
                             placeholder="Enter your full name"
                             required
                         >
@@ -84,7 +86,6 @@
                         <input
                             type="tel"
                             id="phone"
-                            name="phone"
                             placeholder="Enter your phone number"
                             required
                         >
@@ -97,7 +98,6 @@
                         <input
                             type="email"
                             id="email"
-                            name="email"
                             placeholder="Enter your email"
                             required
                         >
@@ -109,7 +109,6 @@
 
                         <textarea
                             id="address"
-                            name="address"
                             rows="4"
                             placeholder="House / Street / Area"
                             required
@@ -123,7 +122,6 @@
                         <input
                             type="text"
                             id="city"
-                            name="city"
                             placeholder="City"
                             required
                         >
@@ -136,7 +134,6 @@
                         <input
                             type="text"
                             id="state"
-                            name="state"
                             placeholder="State"
                             required
                         >
@@ -149,7 +146,6 @@
                         <input
                             type="text"
                             id="pincode"
-                            name="pincode"
                             placeholder="PIN Code"
                             required
                         >
@@ -175,24 +171,19 @@
                     <p>
                         Version:
                         <strong id="orderVersion">
-                            —
+                            V1
                         </strong>
                     </p>
 
                     <p>
                         Quantity:
-                        <strong id="quantity">
-                            1
-                        </strong>
+                        <strong>1</strong>
                     </p>
 
                     <hr>
 
-                    <h2>
-                        Total:
-                        <span id="orderTotal">
-                            Price Coming Soon
-                        </span>
+                    <h2 id="orderTotal">
+                        Price Coming Soon
                     </h2>
 
                     <br>
@@ -214,18 +205,18 @@
         </section>
 
 
-        <!-- SECURITY NOTE -->
+        <!-- INFORMATION -->
 
         <section>
 
-            <p>SSRT CHECKOUT</p>
+            <p>SSRT ORDER SYSTEM</p>
 
-            <h2>Secure Order Process</h2>
+            <h2>Coming Soon</h2>
 
             <p>
-                Your order will only be created after
-                the checkout system is connected to the
-                secure SSRT order backend.
+                Online payment, automatic Order ID,
+                order confirmation and shipment tracking
+                will be connected in the next stage.
             </p>
 
         </section>
@@ -244,7 +235,7 @@
     </footer>
 
 
-    <!-- CHECKOUT SCRIPT -->
+    <!-- SCRIPT -->
 
     <script>
 
@@ -258,18 +249,15 @@
         const products = {
 
             v1: {
-                name: "SSRT Rover V1",
-                price: null
+                name: "SSRT Rover V1"
             },
 
             v2: {
-                name: "SSRT Rover V2",
-                price: null
+                name: "SSRT Rover V2"
             },
 
             v3: {
-                name: "SSRT Rover V3",
-                price: null
+                name: "SSRT Rover V3"
             }
 
         };
@@ -291,11 +279,8 @@
 
                 event.preventDefault();
 
-                const message =
-                    document.getElementById("message");
-
-                message.textContent =
-                    "Checkout system is being prepared. Real order placement and payment will be enabled after the secure backend is connected.";
+                document.getElementById("message").textContent =
+                    "Order system is being prepared. Payment and real order placement will be enabled after the secure backend is connected.";
 
             });
 
