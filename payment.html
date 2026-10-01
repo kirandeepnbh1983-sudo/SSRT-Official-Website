@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment | SSRT Rover</title>
+
+    <meta name="description"
+        content="Secure payment page for SSRT Rover by Space Singh Researcher Team.">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <h1>🚀 SSRT</h1>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="rover.html">Rover</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+
+    <section class="hero">
+        <p>SSRT ROVER</p>
+        <h2>Payment</h2>
+        <p>Complete your order payment.</p>
+    </section>
+
+    <section>
+
+        <div class="cards">
+
+            <article class="card">
+
+                <h2>🛒 Order Summary</h2>
+
+                <p>
+                    Product:
+                    <strong id="productName">SSRT Rover V1</strong>
+                </p>
+
+                <p>
+                    Version:
+                    <strong id="productVersion">V1</strong>
+                </p>
+
+                <hr>
+
+                <h2 id="total">Total: ₹2,000</h2>
+
+            </article>
+
+
+            <article class="card">
+
+                <h2>💳 Payment Method</h2>
+
+                <p>
+                    Select your preferred payment method.
+                </p>
+
+                <br>
+
+                <button class="btn" onclick="showUPI()">
+                    📱 UPI Payment
+                </button>
+
+                <br><br>
+
+                <button class="btn" onclick="showInfo()">
+                    ℹ️ Payment Information
+                </button>
+
+                <p id="paymentMessage"></p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <p>SECURE CHECKOUT</p>
+
+        <h2>🔒 Payment Security</h2>
+
+        <p>
+            SSRT will connect a proper payment gateway
+            before accepting live online payments.
+        </p>
+
+        <p>
+            Never enter card numbers, UPI PINs or passwords
+            directly into this website.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>© 2026 Space Singh Researcher Team (SSRT)</p>
+</footer>
+
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const version = params.get("version") || "v1";
+
+const products = {
+
+    v1: {
+        name: "SSRT Rover V1",
+        version: "V1",
+        price: "₹2,000"
+    },
+
+    v2: {
+        name: "SSRT Rover V2",
+        version: "V2",
+        price: "₹2,500"
+    },
+
+    v3: {
+        name: "SSRT Rover V3",
+        version: "V3",
+        price: "₹3,500"
+    }
+
+};
+
+const product = products[version] || products.v1;
+
+document.getElementById("productName").textContent =
+    product.name;
+
+document.getElementById("productVersion").textContent =
+    product.version;
+
+document.getElementById("total").textContent =
+    "Total: " + product.price;
+
+
+function showUPI() {
+
+    document.getElementById("paymentMessage").innerHTML =
+        "<br><strong>UPI Payment</strong>" +
+        "<br><br>" +
+        "Live UPI payment will be connected here." +
+        "<br>" +
+        "For now, this is a demo payment interface.";
+
+}
+
+
+function showInfo() {
+
+    document.getElementById("paymentMessage").innerHTML =
+        "<br><strong>Payment Information</strong>" +
+        "<br><br>" +
+        "A secure payment gateway will be added before live orders are accepted.";
+
+}
+
+</script>
+
+</body>
+</html>
