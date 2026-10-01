@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | SSRT Rover</title>
+
+    <meta name="description"
+        content="Checkout for SSRT Rover products.">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+        <nav>
+
+            <h1>🚀 SSRT</h1>
+
+            <div>
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="rover.html">Rover</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <p>SSRT ROVER</p>
+
+            <h2>Checkout</h2>
+
+            <p>
+                Complete your details to create your order.
+            </p>
+
+        </section>
+
+
+        <!-- CHECKOUT -->
+
+        <section class="section">
+
+            <div class="cards">
+
+                <!-- CUSTOMER DETAILS -->
+
+                <article class="card">
+
+                    <h2>📦 Delivery Details</h2>
+
+                    <form id="checkoutForm">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            required
+                        >
+
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+
+                        <label for="address">
+                            Delivery Address
+                        </label>
+
+                        <textarea
+                            id="address"
+                            name="address"
+                            rows="4"
+                            placeholder="House / Street / Area"
+                            required
+                        ></textarea>
+
+
+                        <label for="city">
+                            City
+                        </label>
+
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            placeholder="City"
+                            required
+                        >
+
+
+                        <label for="state">
+                            State
+                        </label>
+
+                        <input
+                            type="text"
+                            id="state"
+                            name="state"
+                            placeholder="State"
+                            required
+                        >
+
+
+                        <label for="pincode">
+                            PIN Code
+                        </label>
+
+                        <input
+                            type="text"
+                            id="pincode"
+                            name="pincode"
+                            placeholder="PIN Code"
+                            required
+                        >
+
+                    </form>
+
+                </article>
+
+
+                <!-- ORDER SUMMARY -->
+
+                <article class="card">
+
+                    <h2>🛒 Order Summary</h2>
+
+                    <p>
+                        Product:
+                        <strong id="orderProduct">
+                            SSRT Rover
+                        </strong>
+                    </p>
+
+                    <p>
+                        Version:
+                        <strong id="orderVersion">
+                            —
+                        </strong>
+                    </p>
+
+                    <p>
+                        Quantity:
+                        <strong id="quantity">
+                            1
+                        </strong>
+                    </p>
+
+                    <hr>
+
+                    <h2>
+                        Total:
+                        <span id="orderTotal">
+                            Price Coming Soon
+                        </span>
+                    </h2>
+
+                    <br>
+
+                    <button
+                        type="submit"
+                        form="checkoutForm"
+                        class="btn"
+                    >
+                        Place Order →
+                    </button>
+
+                    <p id="message"></p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECURITY NOTE -->
+
+        <section>
+
+            <p>SSRT CHECKOUT</p>
+
+            <h2>Secure Order Process</h2>
+
+            <p>
+                Your order will only be created after
+                the checkout system is connected to the
+                secure SSRT order backend.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 Space Singh Researcher Team (SSRT)
+        </p>
+
+    </footer>
+
+
+    <!-- CHECKOUT SCRIPT -->
+
+    <script>
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const version =
+            params.get("version") || "v1";
+
+
+        const products = {
+
+            v1: {
+                name: "SSRT Rover V1",
+                price: null
+            },
+
+            v2: {
+                name: "SSRT Rover V2",
+                price: null
+            },
+
+            v3: {
+                name: "SSRT Rover V3",
+                price: null
+            }
+
+        };
+
+
+        const product =
+            products[version] || products.v1;
+
+
+        document.getElementById("orderProduct").textContent =
+            product.name;
+
+        document.getElementById("orderVersion").textContent =
+            version.toUpperCase();
+
+
+        document.getElementById("checkoutForm")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                const message =
+                    document.getElementById("message");
+
+                message.textContent =
+                    "Checkout system is being prepared. Real order placement and payment will be enabled after the secure backend is connected.";
+
+            });
+
+    </script>
+
+</body>
+
+</html>
