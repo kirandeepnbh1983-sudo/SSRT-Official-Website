@@ -10,6 +10,9 @@
     <meta name="description"
         content="Explore SSRT Rover V1, V2 and V3. Choose a DIY kit, guided build kit or ready-made rover.">
 
+    <meta name="keywords"
+        content="SSRT Rover, Space Singh Rover, SSRT V1, SSRT V2, SSRT V3, robotics kit">
+
     <meta name="author" content="Space Singh Researcher Team">
 
     <meta name="robots" content="index, follow">
@@ -42,7 +45,7 @@
 
     <main>
 
-        <!-- PRODUCT HERO -->
+        <!-- HERO -->
 
         <section class="hero">
 
@@ -59,42 +62,44 @@
         </section>
 
 
-        <!-- PRODUCT -->
+        <!-- PRODUCT DETAILS -->
 
         <section class="section">
 
             <div class="card rover-product">
 
                 <span class="rover-badge" id="productVersion">
-                    SSRT
+                    V1
                 </span>
 
                 <h2 id="productName">
-                    SSRT Rover
+                    SSRT Rover V1
                 </h2>
 
                 <p id="productDescription">
-                    Select a rover version to see its details.
+                    A DIY electronics kit for students.
                 </p>
 
 
                 <h3>What's Included?</h3>
 
                 <ul id="productFeatures">
-                    <li>SSRT Rover project</li>
-                    <li>Student robotics experience</li>
+                    <li>Electronic components</li>
+                    <li>Motor & control components</li>
+                    <li>Rover building parts</li>
+                    <li>DIY learning experience</li>
                 </ul>
 
 
                 <h3 id="productType">
-                    Robotics Project
+                    DIY Rover Kit
                 </h3>
 
 
                 <div class="product-price">
 
                     <h2 id="productPrice">
-                        Coming Soon
+                        Price Coming Soon
                     </h2>
 
                 </div>
@@ -103,7 +108,7 @@
                 <!-- BUY BUTTON -->
 
                 <a href="#" class="btn" id="buyButton">
-                    Buy Now →
+                    Buy V1 →
                 </a>
 
             </div>
@@ -122,9 +127,11 @@
             <div class="cards">
 
 
+                <!-- V1 -->
+
                 <article class="card">
 
-                    <h3>🚀 V1</h3>
+                    <h3>🚀 SSRT Rover V1</h3>
 
                     <p>
                         DIY electronics kit for students
@@ -138,9 +145,11 @@
                 </article>
 
 
+                <!-- V2 -->
+
                 <article class="card">
 
-                    <h3>🤖 V2</h3>
+                    <h3>🤖 SSRT Rover V2</h3>
 
                     <p>
                         Kit with complete assembling,
@@ -154,9 +163,11 @@
                 </article>
 
 
+                <!-- V3 -->
+
                 <article class="card">
 
-                    <h3>🛞 V3</h3>
+                    <h3>🛞 SSRT Rover V3</h3>
 
                     <p>
                         Fully assembled ready-made
@@ -175,7 +186,7 @@
         </section>
 
 
-        <!-- NOTE -->
+        <!-- LEARNING -->
 
         <section>
 
@@ -187,6 +198,23 @@
                 SSRT Rover is part of our student robotics
                 work, focused on practical electronics,
                 programming, engineering and experimentation.
+            </p>
+
+        </section>
+
+
+        <!-- ORDER PROCESS -->
+
+        <section>
+
+            <p>COMING SOON</p>
+
+            <h2>SSRT Order System</h2>
+
+            <p>
+                Our online ordering system will allow
+                customers to select a rover, enter delivery
+                details, complete payment and track their order.
             </p>
 
         </section>
@@ -205,13 +233,15 @@
     </footer>
 
 
-    <!-- PRODUCT DATA -->
+    <!-- PRODUCT SCRIPT -->
 
     <script>
 
-        const params = new URLSearchParams(window.location.search);
+        const params =
+            new URLSearchParams(window.location.search);
 
-        const version = params.get("version") || "v1";
+        const version =
+            params.get("version") || "v1";
 
 
         const products = {
@@ -222,7 +252,8 @@
 
                 title: "SSRT Rover V1",
 
-                subtitle: "Build the rover yourself.",
+                subtitle:
+                    "Build the rover yourself.",
 
                 description:
                     "A DIY electronics kit for students who want to build and experiment with the SSRT Rover.",
@@ -249,7 +280,8 @@
 
                 title: "SSRT Rover V2",
 
-                subtitle: "Build with complete guidance.",
+                subtitle:
+                    "Build with complete guidance.",
 
                 description:
                     "A guided build version for students who want support with assembling, wiring and coding.",
@@ -276,7 +308,8 @@
 
                 title: "SSRT Rover V3",
 
-                subtitle: "Ready-made SSRT Rover.",
+                subtitle:
+                    "Ready-made SSRT Rover.",
 
                 description:
                     "A completed SSRT Rover for users who want a ready-made robotics project.",
@@ -299,8 +332,11 @@
         };
 
 
-        const product = products[version] || products.v1;
+        const product =
+            products[version] || products.v1;
 
+
+        /* PRODUCT INFORMATION */
 
         document.getElementById("productVersion").textContent =
             product.version;
@@ -324,6 +360,8 @@
             product.price;
 
 
+        /* FEATURES */
+
         const featureList =
             document.getElementById("productFeatures");
 
@@ -331,7 +369,8 @@
 
         product.features.forEach(function(feature) {
 
-            const li = document.createElement("li");
+            const li =
+                document.createElement("li");
 
             li.textContent = feature;
 
@@ -340,8 +379,16 @@
         });
 
 
-        document.getElementById("buyButton").textContent =
+        /* BUY BUTTON */
+
+        const buyButton =
+            document.getElementById("buyButton");
+
+        buyButton.textContent =
             "Buy " + product.version + " →";
+
+        buyButton.href =
+            "checkout.html?version=" + version;
 
     </script>
 
