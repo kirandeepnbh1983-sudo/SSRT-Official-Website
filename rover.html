@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SSRT Rover | Space Singh Researcher Team</title>
+
+    <meta name="description"
+        content="Explore SSRT Rover V1, V2 and V3. Choose a DIY kit, guided build kit or ready-made rover.">
+
+    <meta name="author" content="Space Singh Researcher Team">
+
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+        <nav>
+
+            <h1>🚀 SSRT</h1>
+
+            <div>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="research.html">Research</a>
+                <a href="projects.html">Projects</a>
+                <a href="ymas.html">YMAS</a>
+                <a href="team.html">Team</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <main>
+
+        <!-- PRODUCT HERO -->
+
+        <section class="hero">
+
+            <p>SSRT ROVER</p>
+
+            <h2 id="productTitle">
+                SSRT Rover
+            </h2>
+
+            <p id="productSubtitle">
+                Explore robotics. Build. Learn. Improve.
+            </p>
+
+        </section>
+
+
+        <!-- PRODUCT -->
+
+        <section class="section">
+
+            <div class="card rover-product">
+
+                <span class="rover-badge" id="productVersion">
+                    SSRT
+                </span>
+
+                <h2 id="productName">
+                    SSRT Rover
+                </h2>
+
+                <p id="productDescription">
+                    Select a rover version to see its details.
+                </p>
+
+
+                <h3>What's Included?</h3>
+
+                <ul id="productFeatures">
+                    <li>SSRT Rover project</li>
+                    <li>Student robotics experience</li>
+                </ul>
+
+
+                <h3 id="productType">
+                    Robotics Project
+                </h3>
+
+
+                <div class="product-price">
+
+                    <h2 id="productPrice">
+                        Coming Soon
+                    </h2>
+
+                </div>
+
+
+                <!-- BUY BUTTON -->
+
+                <a href="#" class="btn" id="buyButton">
+                    Buy Now →
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- OTHER VERSIONS -->
+
+        <section>
+
+            <p>OTHER VERSIONS</p>
+
+            <h2>Explore SSRT Rover</h2>
+
+            <div class="cards">
+
+
+                <article class="card">
+
+                    <h3>🚀 V1</h3>
+
+                    <p>
+                        DIY electronics kit for students
+                        who want to build the rover themselves.
+                    </p>
+
+                    <a href="rover.html?version=v1" class="btn">
+                        View V1
+                    </a>
+
+                </article>
+
+
+                <article class="card">
+
+                    <h3>🤖 V2</h3>
+
+                    <p>
+                        Kit with complete assembling,
+                        wiring and coding guidance.
+                    </p>
+
+                    <a href="rover.html?version=v2" class="btn">
+                        View V2
+                    </a>
+
+                </article>
+
+
+                <article class="card">
+
+                    <h3>🛞 V3</h3>
+
+                    <p>
+                        Fully assembled ready-made
+                        SSRT Rover.
+                    </p>
+
+                    <a href="rover.html?version=v3" class="btn">
+                        View V3
+                    </a>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTE -->
+
+        <section>
+
+            <p>SSRT ROBOTICS</p>
+
+            <h2>Learn Through Building.</h2>
+
+            <p>
+                SSRT Rover is part of our student robotics
+                work, focused on practical electronics,
+                programming, engineering and experimentation.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 Space Singh Researcher Team (SSRT)
+        </p>
+
+    </footer>
+
+
+    <!-- PRODUCT DATA -->
+
+    <script>
+
+        const params = new URLSearchParams(window.location.search);
+
+        const version = params.get("version") || "v1";
+
+
+        const products = {
+
+            v1: {
+
+                version: "V1",
+
+                title: "SSRT Rover V1",
+
+                subtitle: "Build the rover yourself.",
+
+                description:
+                    "A DIY electronics kit for students who want to build and experiment with the SSRT Rover.",
+
+                type:
+                    "DIY Rover Kit",
+
+                price:
+                    "Price Coming Soon",
+
+                features: [
+                    "Electronic components",
+                    "Motor & control components",
+                    "Rover building parts",
+                    "DIY learning experience"
+                ]
+
+            },
+
+
+            v2: {
+
+                version: "V2",
+
+                title: "SSRT Rover V2",
+
+                subtitle: "Build with complete guidance.",
+
+                description:
+                    "A guided build version for students who want support with assembling, wiring and coding.",
+
+                type:
+                    "Kit + Guided Build",
+
+                price:
+                    "Price Coming Soon",
+
+                features: [
+                    "V1 components",
+                    "Complete assembling guidance",
+                    "Wiring guidance",
+                    "Coding guidance"
+                ]
+
+            },
+
+
+            v3: {
+
+                version: "V3",
+
+                title: "SSRT Rover V3",
+
+                subtitle: "Ready-made SSRT Rover.",
+
+                description:
+                    "A completed SSRT Rover for users who want a ready-made robotics project.",
+
+                type:
+                    "Ready-Made Rover",
+
+                price:
+                    "Price Coming Soon",
+
+                features: [
+                    "Fully assembled rover",
+                    "Tested before dispatch",
+                    "Ready to use",
+                    "Future upgrades possible"
+                ]
+
+            }
+
+        };
+
+
+        const product = products[version] || products.v1;
+
+
+        document.getElementById("productVersion").textContent =
+            product.version;
+
+        document.getElementById("productTitle").textContent =
+            product.title;
+
+        document.getElementById("productName").textContent =
+            product.title;
+
+        document.getElementById("productSubtitle").textContent =
+            product.subtitle;
+
+        document.getElementById("productDescription").textContent =
+            product.description;
+
+        document.getElementById("productType").textContent =
+            product.type;
+
+        document.getElementById("productPrice").textContent =
+            product.price;
+
+
+        const featureList =
+            document.getElementById("productFeatures");
+
+        featureList.innerHTML = "";
+
+        product.features.forEach(function(feature) {
+
+            const li = document.createElement("li");
+
+            li.textContent = feature;
+
+            featureList.appendChild(li);
+
+        });
+
+
+        document.getElementById("buyButton").textContent =
+            "Buy " + product.version + " →";
+
+    </script>
+
+</body>
+
+</html>
