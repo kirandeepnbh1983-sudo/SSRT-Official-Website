@@ -14,7 +14,6 @@
         content="SSRT Rover, Space Singh Rover, SSRT V1, SSRT V2, SSRT V3, robotics kit">
 
     <meta name="author" content="Space Singh Researcher Team">
-
     <meta name="robots" content="index, follow">
 
     <link rel="stylesheet" href="css/style.css">
@@ -23,10 +22,8 @@
 <body>
 
     <!-- HEADER -->
-
     <header>
         <nav>
-
             <h1>🚀 SSRT</h1>
 
             <div>
@@ -38,15 +35,12 @@
                 <a href="team.html">Team</a>
                 <a href="contact.html">Contact</a>
             </div>
-
         </nav>
     </header>
-
 
     <main>
 
         <!-- HERO -->
-
         <section class="hero">
 
             <p>SSRT ROVER</p>
@@ -63,7 +57,6 @@
 
 
         <!-- PRODUCT DETAILS -->
-
         <section class="section">
 
             <div class="card rover-product">
@@ -80,7 +73,6 @@
                     A DIY electronics kit for students.
                 </p>
 
-
                 <h3>What's Included?</h3>
 
                 <ul id="productFeatures">
@@ -90,23 +82,20 @@
                     <li>DIY learning experience</li>
                 </ul>
 
-
                 <h3 id="productType">
                     DIY Rover Kit
                 </h3>
 
-
+                <!-- PRICE -->
                 <div class="product-price">
 
                     <h2 id="productPrice">
-                        Price Coming Soon
+                        ₹2,000
                     </h2>
 
                 </div>
 
-
                 <!-- BUY BUTTON -->
-
                 <a href="#" class="btn" id="buyButton">
                     Buy V1 →
                 </a>
@@ -117,7 +106,6 @@
 
 
         <!-- OTHER VERSIONS -->
-
         <section>
 
             <p>OTHER VERSIONS</p>
@@ -126,9 +114,7 @@
 
             <div class="cards">
 
-
                 <!-- V1 -->
-
                 <article class="card">
 
                     <h3>🚀 SSRT Rover V1</h3>
@@ -138,6 +124,8 @@
                         who want to build the rover themselves.
                     </p>
 
+                    <h3>₹2,000</h3>
+
                     <a href="rover.html?version=v1" class="btn">
                         View V1
                     </a>
@@ -146,7 +134,6 @@
 
 
                 <!-- V2 -->
-
                 <article class="card">
 
                     <h3>🤖 SSRT Rover V2</h3>
@@ -156,6 +143,8 @@
                         wiring and coding guidance.
                     </p>
 
+                    <h3>₹2,500</h3>
+
                     <a href="rover.html?version=v2" class="btn">
                         View V2
                     </a>
@@ -164,7 +153,6 @@
 
 
                 <!-- V3 -->
-
                 <article class="card">
 
                     <h3>🛞 SSRT Rover V3</h3>
@@ -174,12 +162,13 @@
                         SSRT Rover.
                     </p>
 
+                    <h3>₹3,500</h3>
+
                     <a href="rover.html?version=v3" class="btn">
                         View V3
                     </a>
 
                 </article>
-
 
             </div>
 
@@ -187,7 +176,6 @@
 
 
         <!-- LEARNING -->
-
         <section>
 
             <p>SSRT ROBOTICS</p>
@@ -204,17 +192,15 @@
 
 
         <!-- ORDER PROCESS -->
-
         <section>
 
-            <p>COMING SOON</p>
+            <p>ORDER SYSTEM</p>
 
-            <h2>SSRT Order System</h2>
+            <h2>SSRT Rover Orders</h2>
 
             <p>
-                Our online ordering system will allow
-                customers to select a rover, enter delivery
-                details, complete payment and track their order.
+                Select your rover, enter your delivery details,
+                complete payment and track your order.
             </p>
 
         </section>
@@ -223,7 +209,6 @@
 
 
     <!-- FOOTER -->
-
     <footer>
 
         <p>
@@ -234,7 +219,6 @@
 
 
     <!-- PRODUCT SCRIPT -->
-
     <script>
 
         const params =
@@ -246,6 +230,7 @@
 
         const products = {
 
+            /* V1 */
             v1: {
 
                 version: "V1",
@@ -262,7 +247,7 @@
                     "DIY Rover Kit",
 
                 price:
-                    "Price Coming Soon",
+                    "₹2,000",
 
                 features: [
                     "Electronic components",
@@ -274,6 +259,7 @@
             },
 
 
+            /* V2 */
             v2: {
 
                 version: "V2",
@@ -290,7 +276,7 @@
                     "Kit + Guided Build",
 
                 price:
-                    "Price Coming Soon",
+                    "₹2,500",
 
                 features: [
                     "V1 components",
@@ -302,6 +288,7 @@
             },
 
 
+            /* V3 */
             v3: {
 
                 version: "V3",
@@ -318,7 +305,7 @@
                     "Ready-Made Rover",
 
                 price:
-                    "Price Coming Soon",
+                    "₹3,500",
 
                 features: [
                     "Fully assembled rover",
@@ -331,6 +318,8 @@
 
         };
 
+
+        /* SELECT PRODUCT */
 
         const product =
             products[version] || products.v1;
