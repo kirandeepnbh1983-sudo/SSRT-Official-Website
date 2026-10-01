@@ -17,306 +17,342 @@
 
 <body>
 
-    <!-- HEADER -->
+<header>
+    <nav>
 
-    <header>
-        <nav>
+        <h1>🚀 SSRT</h1>
 
-            <h1>🚀 SSRT</h1>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="rover.html">Rover</a>
+            <a href="contact.html">Contact</a>
+        </div>
 
-            <div>
-                <a href="index.html">Home</a>
-                <a href="projects.html">Projects</a>
-                <a href="rover.html">Rover</a>
-                <a href="contact.html">Contact</a>
-            </div>
+    </nav>
+</header>
 
-        </nav>
-    </header>
 
+<main>
 
-    <main>
+    <!-- HERO -->
 
-        <!-- HERO -->
+    <section class="hero">
 
-        <section class="hero">
+        <p>SSRT ROVER</p>
 
-            <p>SSRT ROVER</p>
-
-            <h2>Checkout</h2>
-
-            <p>
-                Complete your details to continue.
-            </p>
-
-        </section>
-
-
-        <!-- CHECKOUT -->
-
-        <section>
-
-            <div class="cards">
-
-
-                <!-- CUSTOMER DETAILS -->
-
-                <article class="card">
-
-                    <h2>📦 Delivery Details</h2>
-
-                    <form id="checkoutForm">
-
-                        <label for="name">
-                            Full Name
-                        </label>
-
-                        <input
-                            type="text"
-                            id="name"
-                            placeholder="Enter your full name"
-                            required
-                        >
-
-
-                        <label for="phone">
-                            Phone Number
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="phone"
-                            placeholder="Enter your phone number"
-                            required
-                        >
-
-
-                        <label for="email">
-                            Email
-                        </label>
-
-                        <input
-                            type="email"
-                            id="email"
-                            placeholder="Enter your email"
-                            required
-                        >
-
-
-                        <label for="address">
-                            Delivery Address
-                        </label>
-
-                        <textarea
-                            id="address"
-                            rows="4"
-                            placeholder="House / Street / Area"
-                            required
-                        ></textarea>
-
-
-                        <label for="city">
-                            City
-                        </label>
-
-                        <input
-                            type="text"
-                            id="city"
-                            placeholder="City"
-                            required
-                        >
-
-
-                        <label for="state">
-                            State
-                        </label>
-
-                        <input
-                            type="text"
-                            id="state"
-                            placeholder="State"
-                            required
-                        >
-
-
-                        <label for="pincode">
-                            PIN Code
-                        </label>
-
-                        <input
-                            type="text"
-                            id="pincode"
-                            placeholder="PIN Code"
-                            required
-                        >
-
-                    </form>
-
-                </article>
-
-
-                <!-- ORDER SUMMARY -->
-
-                <article class="card">
-
-                    <h2>🛒 Order Summary</h2>
-
-                    <p>
-                        Product:
-                        <strong id="orderProduct">
-                            SSRT Rover
-                        </strong>
-                    </p>
-
-                    <p>
-                        Version:
-                        <strong id="orderVersion">
-                            V1
-                        </strong>
-                    </p>
-
-                    <p>
-                        Quantity:
-                        <strong>1</strong>
-                    </p>
-
-                    <hr>
-
-                    <p>
-                        Price:
-                        <strong id="orderPrice">
-                            ₹2,000
-                        </strong>
-                    </p>
-
-                    <h2 id="orderTotal">
-                        Total: ₹2,000
-                    </h2>
-
-                    <br>
-
-                    <button
-                        type="submit"
-                        form="checkoutForm"
-                        class="btn"
-                    >
-                        Place Order →
-                    </button>
-
-                    <p id="message"></p>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- INFORMATION -->
-
-        <section>
-
-            <p>SSRT ORDER SYSTEM</p>
-
-            <h2>Next Stage</h2>
-
-            <p>
-                Online payment, automatic Order ID,
-                order confirmation and shipment tracking
-                will be connected in the next stage.
-            </p>
-
-        </section>
-
-    </main>
-
-
-    <!-- FOOTER -->
-
-    <footer>
+        <h2>Checkout</h2>
 
         <p>
-            © 2026 Space Singh Researcher Team (SSRT)
+            Complete your details to continue.
         </p>
 
-    </footer>
+    </section>
 
 
-    <!-- SCRIPT -->
+    <!-- CHECKOUT -->
 
-    <script>
+    <section>
 
-        /* GET VERSION FROM URL */
+        <div class="cards">
 
-        const params =
-            new URLSearchParams(window.location.search);
+            <!-- DELIVERY DETAILS -->
 
-        const version =
-            params.get("version") || "v1";
+            <article class="card">
 
+                <h2>📦 Delivery Details</h2>
 
-        /* PRODUCT DATA */
+                <form id="checkoutForm">
 
-        const products = {
+                    <label for="name">
+                        Full Name
+                    </label>
 
-            v1: {
-                name: "SSRT Rover V1",
-                version: "V1",
-                price: 2000,
-                displayPrice: "₹2,000"
-            },
-
-            v2: {
-                name: "SSRT Rover V2",
-                version: "V2",
-                price: 2500,
-                displayPrice: "₹2,500"
-            },
-
-            v3: {
-                name: "SSRT Rover V3",
-                version: "V3",
-                price: 3500,
-                displayPrice: "₹3,500"
-            }
-
-        };
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
 
 
-        /* SELECT PRODUCT */
+                    <label for="phone">
+                        Phone Number
+                    </label>
 
-        const product =
-            products[version] || products.v1;
-
-
-        /* UPDATE ORDER SUMMARY */
-
-        document.getElementById("orderProduct").textContent =
-            product.name;
-
-        document.getElementById("orderVersion").textContent =
-            product.version;
-
-        document.getElementById("orderPrice").textContent =
-            product.displayPrice;
-
-        document.getElementById("orderTotal").textContent =
-            "Total: " + product.displayPrice;
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Enter your phone number"
+                        required
+                    >
 
 
-        /* FORM SUBMISSION */
+                    <label for="email">
+                        Email
+                    </label>
 
-        document.getElementById("checkoutForm")
-            .addEventListener("submit", function(event) {
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
 
-                event.preventDefault();
 
-                document.getElementById("message").textContent =
-                    "Order system is being prepared. Payment and real order placement will be enabled after the secure backend is connected.";
+                    <label for="address">
+                        Delivery Address
+                    </label>
 
-            });
+                    <textarea
+                        id="address"
+                        rows="4"
+                        placeholder="House / Street / Area"
+                        required
+                    ></textarea>
 
-    </script>
+
+                    <label for="city">
+                        City
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        placeholder="City"
+                        required
+                    >
+
+
+                    <label for="state">
+                        State
+                    </label>
+
+                    <input
+                        type="text"
+                        id="state"
+                        placeholder="State"
+                        required
+                    >
+
+
+                    <label for="pincode">
+                        PIN Code
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pincode"
+                        placeholder="PIN Code"
+                        required
+                    >
+
+                </form>
+
+            </article>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <article class="card">
+
+                <h2>🛒 Order Summary</h2>
+
+                <p>
+                    Product:
+                    <strong id="orderProduct">
+                        SSRT Rover V1
+                    </strong>
+                </p>
+
+                <p>
+                    Version:
+                    <strong id="orderVersion">
+                        V1
+                    </strong>
+                </p>
+
+                <p>
+                    Quantity:
+                    <strong>1</strong>
+                </p>
+
+                <hr>
+
+                <p>
+                    Price:
+                    <strong id="orderPrice">
+                        ₹2,000
+                    </strong>
+                </p>
+
+                <h2 id="orderTotal">
+                    Total: ₹2,000
+                </h2>
+
+                <br>
+
+                <button
+                    type="submit"
+                    form="checkoutForm"
+                    class="btn"
+                >
+                    Place Order →
+                </button>
+
+                <p id="message"></p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- ORDER SYSTEM -->
+
+    <section>
+
+        <p>SSRT ORDER SYSTEM</p>
+
+        <h2>Order Confirmation</h2>
+
+        <p>
+            Your order ID will be generated after
+            placing the order.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 Space Singh Researcher Team (SSRT)
+    </p>
+
+</footer>
+
+
+<!-- ORDER SCRIPT -->
+
+<script>
+
+    /* GET PRODUCT VERSION */
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const version =
+        params.get("version") || "v1";
+
+
+    /* PRODUCT DATABASE */
+
+    const products = {
+
+        v1: {
+            name: "SSRT Rover V1",
+            version: "V1",
+            price: 2000,
+            displayPrice: "₹2,000"
+        },
+
+        v2: {
+            name: "SSRT Rover V2",
+            version: "V2",
+            price: 2500,
+            displayPrice: "₹2,500"
+        },
+
+        v3: {
+            name: "SSRT Rover V3",
+            version: "V3",
+            price: 3500,
+            displayPrice: "₹3,500"
+        }
+
+    };
+
+
+    /* SELECT PRODUCT */
+
+    const product =
+        products[version] || products.v1;
+
+
+    /* SHOW PRODUCT */
+
+    document.getElementById("orderProduct").textContent =
+        product.name;
+
+    document.getElementById("orderVersion").textContent =
+        product.version;
+
+    document.getElementById("orderPrice").textContent =
+        product.displayPrice;
+
+    document.getElementById("orderTotal").textContent =
+        "Total: " + product.displayPrice;
+
+
+    /* PLACE ORDER */
+
+    document.getElementById("checkoutForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            /* GENERATE ORDER ID */
+
+            const orderNumber =
+                "SSRT-" +
+                Date.now()
+                .toString()
+                .slice(-6);
+
+
+            /* SHOW CONFIRMATION */
+
+            const message =
+                document.getElementById("message");
+
+
+            message.innerHTML =
+
+                "<strong>🎉 Order Created Successfully!</strong>" +
+                "<br><br>" +
+
+                "Order ID: " +
+                "<strong>" +
+                orderNumber +
+                "</strong>" +
+
+                "<br>" +
+
+                "Product: " +
+                product.name +
+
+                "<br>" +
+
+                "Version: " +
+                product.version +
+
+                "<br>" +
+
+                "Total: " +
+                product.displayPrice +
+
+                "<br><br>" +
+
+                "Payment and delivery tracking will be connected in the next stage.";
+
+        });
+
+</script>
 
 </body>
 
