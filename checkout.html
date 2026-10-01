@@ -182,8 +182,15 @@
 
                     <hr>
 
+                    <p>
+                        Price:
+                        <strong id="orderPrice">
+                            ₹2,000
+                        </strong>
+                    </p>
+
                     <h2 id="orderTotal">
-                        Price Coming Soon
+                        Total: ₹2,000
                     </h2>
 
                     <br>
@@ -211,7 +218,7 @@
 
             <p>SSRT ORDER SYSTEM</p>
 
-            <h2>Coming Soon</h2>
+            <h2>Next Stage</h2>
 
             <p>
                 Online payment, automatic Order ID,
@@ -239,6 +246,8 @@
 
     <script>
 
+        /* GET VERSION FROM URL */
+
         const params =
             new URLSearchParams(window.location.search);
 
@@ -246,33 +255,56 @@
             params.get("version") || "v1";
 
 
+        /* PRODUCT DATA */
+
         const products = {
 
             v1: {
-                name: "SSRT Rover V1"
+                name: "SSRT Rover V1",
+                version: "V1",
+                price: 2000,
+                displayPrice: "₹2,000"
             },
 
             v2: {
-                name: "SSRT Rover V2"
+                name: "SSRT Rover V2",
+                version: "V2",
+                price: 2500,
+                displayPrice: "₹2,500"
             },
 
             v3: {
-                name: "SSRT Rover V3"
+                name: "SSRT Rover V3",
+                version: "V3",
+                price: 3500,
+                displayPrice: "₹3,500"
             }
 
         };
 
 
+        /* SELECT PRODUCT */
+
         const product =
             products[version] || products.v1;
 
+
+        /* UPDATE ORDER SUMMARY */
 
         document.getElementById("orderProduct").textContent =
             product.name;
 
         document.getElementById("orderVersion").textContent =
-            version.toUpperCase();
+            product.version;
 
+        document.getElementById("orderPrice").textContent =
+            product.displayPrice;
+
+        document.getElementById("orderTotal").textContent =
+            "Total: " + product.displayPrice;
+
+
+        /* FORM SUBMISSION */
 
         document.getElementById("checkoutForm")
             .addEventListener("submit", function(event) {
