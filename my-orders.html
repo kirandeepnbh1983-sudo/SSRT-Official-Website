@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders | SSRT Rover</title>
+
+    <meta name="description"
+        content="Track your SSRT Rover order.">
+
+    <meta name="author"
+        content="Space Singh Researcher Team">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <h1>🚀 SSRT</h1>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="rover.html">Rover</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <p>SSRT ROVER</p>
+
+        <h2>My Orders</h2>
+
+        <p>
+            View and track your latest SSRT Rover order.
+        </p>
+
+    </section>
+
+
+    <!-- ORDER -->
+
+    <section>
+
+        <div class="cards">
+
+            <article class="card">
+
+                <h2>📦 Order Details</h2>
+
+                <p>
+                    Order ID:
+                    <strong id="orderId">
+                        —
+                    </strong>
+                </p>
+
+                <p>
+                    Product:
+                    <strong id="product">
+                        —
+                    </strong>
+                </p>
+
+                <p>
+                    Version:
+                    <strong id="version">
+                        —
+                    </strong>
+                </p>
+
+                <p>
+                    Amount:
+                    <strong id="amount">
+                        —
+                    </strong>
+                </p>
+
+                <p>
+                    Payment:
+                    <strong id="paymentStatus">
+                        —
+                    </strong>
+                </p>
+
+            </article>
+
+
+            <article class="card">
+
+                <h2>🚚 Order Status</h2>
+
+                <p>
+                    Current Status:
+                    <strong id="orderStatus">
+                        —
+                    </strong>
+                </p>
+
+                <hr>
+
+                <p>1️⃣ Order Placed</p>
+                <p>2️⃣ Payment Completed</p>
+                <p>3️⃣ Confirmed</p>
+                <p>4️⃣ Processing</p>
+                <p>5️⃣ Shipped</p>
+                <p>6️⃣ Out for Delivery</p>
+                <p>7️⃣ Delivered</p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- NO ORDER -->
+
+    <section id="noOrder" style="display:none;">
+
+        <p>SSRT ORDER SYSTEM</p>
+
+        <h2>📭 No Order Found</h2>
+
+        <p>
+            No SSRT Rover order was found on this browser.
+        </p>
+
+        <br>
+
+        <a href="projects.html" class="btn">
+            Go to Rover Store →
+        </a>
+
+    </section>
+
+
+    <!-- INFO -->
+
+    <section>
+
+        <p>ORDER TRACKING</p>
+
+        <h2>ℹ️ About Tracking</h2>
+
+        <p>
+            This is currently a demo tracking system.
+            Order information is stored only in this browser.
+        </p>
+
+        <p>
+            A real online order database and courier
+            tracking system will be connected later.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>© 2026 Space Singh Researcher Team (SSRT)</p>
+</footer>
+
+
+<script>
+
+    /* ==============================
+       GET SAVED ORDER
+    ============================== */
+
+    let order = null;
+
+    try {
+
+        order =
+            JSON.parse(
+                localStorage.getItem("ssrtOrder")
+            );
+
+    } catch (error) {
+
+        order = null;
+
+    }
+
+
+    /* ==============================
+       CHECK ORDER
+    ============================== */
+
+    if (!order) {
+
+        document.getElementById("noOrder")
+            .style.display = "block";
+
+    } else {
+
+        /* ==============================
+           SHOW ORDER DATA
+        ============================== */
+
+        document.getElementById("orderId")
+            .textContent =
+            order.orderId || "—";
+
+        document.getElementById("product")
+            .textContent =
+            order.product || "—";
+
+        document.getElementById("version")
+            .textContent =
+            order.version || "—";
+
+        document.getElementById("amount")
+            .textContent =
+            "₹" + Number(order.price || 0).toLocaleString("en-IN");
+
+        document.getElementById("paymentStatus")
+            .textContent =
+            order.paymentStatus || "Pending";
+
+        document.getElementById("orderStatus")
+            .textContent =
+            order.orderStatus || "Order Placed";
+
+    }
+
+</script>
+
+</body>
+
+</html>
