@@ -284,21 +284,42 @@
 
                     const order = {
 
-                        orderId: orderId,
+    orderId: orderId,
 
-                        product: product.name,
+    product: product.name,
 
-                        version: product.version,
+    version: product.version,
 
-                        price: product.price,
+    price: product.price,
 
-                        paymentStatus:
-                            "Demo Paid",
+    name:
+        savedOrder?.name || "",
 
-                        orderStatus:
-                            "Payment Completed"
+    phone:
+        savedOrder?.phone || "",
 
-                    };
+    email:
+        savedOrder?.email || "",
+
+    address:
+        savedOrder?.address || "",
+
+    city:
+        savedOrder?.city || "",
+
+    state:
+        savedOrder?.state || "",
+
+    pincode:
+        savedOrder?.pincode || "",
+
+    paymentStatus:
+        "Demo Paid",
+
+    orderStatus:
+        "Payment Completed"
+
+};
 
 
                     /* Save locally */
