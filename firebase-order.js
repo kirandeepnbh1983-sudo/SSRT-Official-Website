@@ -11,13 +11,10 @@ import {
 
 import firebaseConfig from "./firebase-config.js";
 
-
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-
-/* Create an online SSRT order */
 
 export async function createSSRTOrder(order) {
 
@@ -31,6 +28,20 @@ export async function createSSRTOrder(order) {
 
         price: order.price,
 
+        name: order.name || "",
+
+        phone: order.phone || "",
+
+        email: order.email || "",
+
+        address: order.address || "",
+
+        city: order.city || "",
+
+        state: order.state || "",
+
+        pincode: order.pincode || "",
+
         paymentStatus:
             order.paymentStatus || "Pending",
 
@@ -39,7 +50,6 @@ export async function createSSRTOrder(order) {
 
         createdAt:
             serverTimestamp()
-
     };
 
 
