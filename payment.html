@@ -8,7 +8,9 @@
     <title>Payment | SSRT Rover</title>
 
     <meta name="description"
-        content="Secure payment page for SSRT Rover by Space Singh Researcher Team.">
+        content="Payment page for SSRT Rover by Space Singh Researcher Team.">
+
+    <meta name="author" content="Space Singh Researcher Team">
 
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -28,13 +30,15 @@
     </nav>
 </header>
 
+
 <main>
 
     <section class="hero">
         <p>SSRT ROVER</p>
         <h2>Payment</h2>
-        <p>Complete your order payment.</p>
+        <p>Review your order and continue.</p>
     </section>
+
 
     <section>
 
@@ -43,6 +47,11 @@
             <article class="card">
 
                 <h2>🛒 Order Summary</h2>
+
+                <p>
+                    Order ID:
+                    <strong id="orderId">SSRT-------</strong>
+                </p>
 
                 <p>
                     Product:
@@ -63,22 +72,20 @@
 
             <article class="card">
 
-                <h2>💳 Payment Method</h2>
+                <h2>💳 Payment</h2>
 
                 <p>
-                    Select your preferred payment method.
+                    Choose your payment option.
                 </p>
 
                 <br>
 
-                <button class="btn" onclick="showUPI()">
-                    📱 UPI Payment
-                </button>
-
-                <br><br>
-
-                <button class="btn" onclick="showInfo()">
-                    ℹ️ Payment Information
+                <button
+                    class="btn"
+                    id="payButton"
+                    type="button"
+                >
+                    ✅ Complete Demo Payment
                 </button>
 
                 <p id="paymentMessage"></p>
@@ -92,18 +99,13 @@
 
     <section>
 
-        <p>SECURE CHECKOUT</p>
+        <p>PAYMENT SECURITY</p>
 
-        <h2>🔒 Payment Security</h2>
-
-        <p>
-            SSRT will connect a proper payment gateway
-            before accepting live online payments.
-        </p>
+        <h2>🔒 Secure Payment</h2>
 
         <p>
-            Never enter card numbers, UPI PINs or passwords
-            directly into this website.
+            This is currently a demo payment flow.
+            No real payment is processed.
         </p>
 
     </section>
@@ -118,66 +120,137 @@
 
 <script>
 
-const params = new URLSearchParams(window.location.search);
+    /* ==============================
+       GET VERSION
+    ============================== */
 
-const version = params.get("version") || "v1";
+    const params = new URLSearchParams(
+        window.location.search
+    );
 
-const products = {
+    const version =
+        params.get("version") || "v1";
 
-    v1: {
-        name: "SSRT Rover V1",
-        version: "V1",
-        price: "₹2,000"
-    },
 
-    v2: {
-        name: "SSRT Rover V2",
-        version: "V2",
-        price: "₹2,500"
-    },
+    /* ==============================
+       PRODUCTS
+    ============================== */
 
-    v3: {
-        name: "SSRT Rover V3",
-        version: "V3",
-        price: "₹3,500"
+    const products = {
+
+        v1: {
+            name: "SSRT Rover V1",
+            version: "V1",
+            price: 2000,
+            displayPrice: "₹2,000"
+        },
+
+        v2: {
+            name: "SSRT Rover V2",
+            version: "V2",
+            price: 2500,
+            displayPrice: "₹2,500"
+        },
+
+        v3: {
+            name: "SSRT Rover V3",
+            version: "V3",
+            price: 3500,
+            displayPrice: "₹3,500"
+        }
+
+    };
+
+
+    const product =
+        products[version] || products.v1;
+
+
+    /* ==============================
+       GET SAVED ORDER
+    ============================== */
+
+    let savedOrder = null;
+
+    try {
+
+        savedOrder =
+            JSON.parse(
+                localStorage.getItem("ssrtOrder")
+            );
+
+    } catch (error) {
+
+        savedOrder = null;
+
     }
 
-};
 
-const product = products[version] || products.v1;
+    /* ==============================
+       ORDER ID
+    ============================== */
 
-document.getElementById("productName").textContent =
-    product.name;
-
-document.getElementById("productVersion").textContent =
-    product.version;
-
-document.getElementById("total").textContent =
-    "Total: " + product.price;
-
-
-function showUPI() {
-
-    document.getElementById("paymentMessage").innerHTML =
-        "<br><strong>UPI Payment</strong>" +
-        "<br><br>" +
-        "Live UPI payment will be connected here." +
-        "<br>" +
-        "For now, this is a demo payment interface.";
-
-}
+    const orderId =
+        savedOrder && savedOrder.orderId
+            ? savedOrder.orderId
+            : "SSRT-" +
+              Date.now()
+                  .toString()
+                  .slice(-6);
 
 
-function showInfo() {
+    /* ==============================
+       SHOW ORDER
+    ============================== */
 
-    document.getElementById("paymentMessage").innerHTML =
-        "<br><strong>Payment Information</strong>" +
-        "<br><br>" +
-        "A secure payment gateway will be added before live orders are accepted.";
+    document.getElementById("orderId").textContent =
+        orderId;
 
-}
+    document.getElementById("productName").textContent =
+        product.name;
+
+    document.getElementById("productVersion").textContent =
+        product.version;
+
+    document.getElementById("total").textContent =
+        "Total: " + product.displayPrice;
+
+
+    /* ==============================
+       DEMO PAYMENT
+    ============================== */
+
+    document
+        .getElementById("payButton")
+        .addEventListener("click", function () {
+
+            const order = savedOrder || {};
+
+            order.orderId = orderId;
+            order.product = product.name;
+            order.version = product.version;
+            order.price = product.price;
+            order.paymentStatus = "Demo Paid";
+            order.orderStatus = "Payment Completed";
+
+            localStorage.setItem(
+                "ssrtOrder",
+                JSON.stringify(order)
+            );
+
+
+            /*
+               Move to confirmation page
+            */
+
+            window.location.href =
+                "./order-confirmation.html?orderId=" +
+                encodeURIComponent(orderId);
+
+        });
 
 </script>
 
 </body>
+
 </html>
