@@ -10,9 +10,6 @@
     <meta name="description"
         content="Payment page for SSRT Rover by Space Singh Researcher Team.">
 
-    <meta name="author"
-        content="Space Singh Researcher Team">
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -32,27 +29,19 @@
     </nav>
 </header>
 
-
 <main>
 
     <section class="hero">
-
         <p>SSRT ROVER</p>
-
         <h2>Payment</h2>
-
-        <p>
-            Review your order and continue.
-        </p>
-
+        <p>Review your order before continuing.</p>
     </section>
-
 
     <section>
 
         <div class="cards">
 
-            <!-- ORDER SUMMARY -->
+            <!-- ORDER -->
 
             <article class="card">
 
@@ -60,30 +49,27 @@
 
                 <p>
                     Order ID:
-                    <strong id="orderId">
-                        —
-                    </strong>
+                    <strong id="orderId">—</strong>
                 </p>
 
                 <p>
                     Product:
-                    <strong id="productName">
-                        —
-                    </strong>
+                    <strong id="productName">—</strong>
                 </p>
 
                 <p>
                     Version:
-                    <strong id="productVersion">
-                        —
-                    </strong>
+                    <strong id="productVersion">—</strong>
+                </p>
+
+                <p>
+                    Delivery:
+                    <strong id="deliveryCity">—</strong>
                 </p>
 
                 <hr>
 
-                <h2 id="total">
-                    Total: ₹0
-                </h2>
+                <h2 id="total">Total: ₹0</h2>
 
             </article>
 
@@ -95,9 +81,8 @@
                 <h2>💳 Payment</h2>
 
                 <p>
-                    This button currently creates a demo
-                    payment-completed order in SSRT's
-                    Firestore database.
+                    This is currently a demo payment.
+                    No real money will be charged.
                 </p>
 
                 <br>
@@ -106,9 +91,7 @@
                     class="btn"
                     id="payButton"
                     type="button">
-
                     ✅ Complete Demo Payment
-
                 </button>
 
                 <p id="paymentMessage"></p>
@@ -119,269 +102,243 @@
 
     </section>
 
-
-    <section>
-
-        <p>PAYMENT SECURITY</p>
-
-        <h2>🔒 Secure Payment</h2>
-
-        <p>
-            No real money is charged by this demo button.
-        </p>
-
-    </section>
-
 </main>
 
-
 <footer>
-    <p>
-        © 2026 Space Singh Researcher Team (SSRT)
-    </p>
+    <p>© 2026 Space Singh Researcher Team (SSRT)</p>
 </footer>
 
 
-<!-- FIREBASE ORDER MODULE -->
-
 <script type="module">
 
-    import { createSSRTOrder }
-        from "./firebase-order.js";
+import { createSSRTOrder }
+    from "./firebase-order.js";
 
 
-    /* ==============================
-       GET VERSION
-    ============================== */
+/* ==============================
+   GET PRODUCT VERSION
+============================== */
 
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
-    const version =
-        params.get("version") || "v1";
-
-
-    /* ==============================
-       PRODUCTS
-    ============================== */
-
-    const products = {
-
-        v1: {
-            name: "SSRT Rover V1",
-            version: "V1",
-            price: 2000,
-            displayPrice: "₹2,000"
-        },
-
-        v2: {
-            name: "SSRT Rover V2",
-            version: "V2",
-            price: 2500,
-            displayPrice: "₹2,500"
-        },
-
-        v3: {
-            name: "SSRT Rover V3",
-            version: "V3",
-            price: 3500,
-            displayPrice: "₹3,500"
-        }
-
-    };
+const version =
+    params.get("version") || "v1";
 
 
-    const product =
-        products[version] || products.v1;
+/* ==============================
+   PRODUCTS
+============================== */
 
+const products = {
 
-    /* ==============================
-       GET SAVED CHECKOUT ORDER
-    ============================== */
+    v1: {
+        name: "SSRT Rover V1",
+        version: "V1",
+        price: 2000,
+        displayPrice: "₹2,000"
+    },
 
-    let savedOrder = null;
+    v2: {
+        name: "SSRT Rover V2",
+        version: "V2",
+        price: 2500,
+        displayPrice: "₹2,500"
+    },
 
-    try {
-
-        savedOrder =
-            JSON.parse(
-                localStorage.getItem("ssrtOrder")
-            );
-
-    } catch (error) {
-
-        savedOrder = null;
-
+    v3: {
+        name: "SSRT Rover V3",
+        version: "V3",
+        price: 3500,
+        displayPrice: "₹3,500"
     }
-
-
-    /* ==============================
-       ORDER ID
-    ============================== */
-
-    const orderId =
-        savedOrder?.orderId ||
-        "SSRT-" +
-        Date.now()
-            .toString()
-            .slice(-6);
-
-
-    /* ==============================
-       SHOW ORDER
-    ============================== */
-
-    document.getElementById("orderId")
-        .textContent =
-        orderId;
-
-    document.getElementById("productName")
-        .textContent =
-        product.name;
-
-    document.getElementById("productVersion")
-        .textContent =
-        product.version;
-
-    document.getElementById("total")
-        .textContent =
-        "Total: " +
-        product.displayPrice;
-
-
-    /* ==============================
-       PAYMENT BUTTON
-    ============================== */
-
-    document
-        .getElementById("payButton")
-        .addEventListener(
-            "click",
-            async function () {
-
-                const button =
-                    document.getElementById(
-                        "payButton"
-                    );
-
-                const message =
-                    document.getElementById(
-                        "paymentMessage"
-                    );
-
-
-                /* Prevent double click */
-
-                button.disabled = true;
-
-                button.textContent =
-                    "⏳ Creating Order...";
-
-
-                try {
-
-                    const order = {
-
-    orderId: orderId,
-
-    product: product.name,
-
-    version: product.version,
-
-    price: product.price,
-
-    name:
-        savedOrder?.name || "",
-
-    phone:
-        savedOrder?.phone || "",
-
-    email:
-        savedOrder?.email || "",
-
-    address:
-        savedOrder?.address || "",
-
-    city:
-        savedOrder?.city || "",
-
-    state:
-        savedOrder?.state || "",
-
-    pincode:
-        savedOrder?.pincode || "",
-
-    paymentStatus:
-        "Demo Paid",
-
-    orderStatus:
-        "Payment Completed"
 
 };
 
-
-                    /* Save locally */
-
-                    localStorage.setItem(
-                        "ssrtOrder",
-                        JSON.stringify(order)
-                    );
+const product =
+    products[version] || products.v1;
 
 
-                    /* Save online */
+/* ==============================
+   GET CHECKOUT DATA
+============================== */
 
-                    await createSSRTOrder(order);
+let savedOrder = null;
 
+try {
 
-                    message.innerHTML =
-                        "<strong>✅ Order saved successfully!</strong>" +
-                        "<br><br>" +
-                        "Order ID: <strong>" +
-                        orderId +
-                        "</strong>" +
-                        "<br><br>" +
-                        "Opening confirmation...";
+    savedOrder =
+        JSON.parse(
+            localStorage.getItem("ssrtOrder")
+        );
 
+} catch (error) {
 
-                    setTimeout(
-                        function () {
+    savedOrder = null;
 
-                            window.location.href =
-                                "order-confirmation.html?orderId=" +
-                                encodeURIComponent(
-                                    orderId
-                                );
-
-                        },
-                        1000
-                    );
+}
 
 
-                } catch (error) {
+/* ==============================
+   ORDER ID
+============================== */
 
-                    console.error(
-                        "Firebase order error:",
-                        error
-                    );
-
-
-                    button.disabled = false;
-
-                    button.textContent =
-                        "✅ Complete Demo Payment";
+const orderId =
+    savedOrder?.orderId ||
+    "SSRT-" +
+    Date.now()
+        .toString()
+        .slice(-6);
 
 
-                    message.innerHTML =
-                        "<strong>❌ Order could not be saved.</strong>" +
-                        "<br><br>" +
-                        "Please check your Firebase configuration and Firestore rules.";
+/* ==============================
+   SHOW ORDER
+============================== */
 
-                }
+document.getElementById("orderId")
+    .textContent = orderId;
+
+document.getElementById("productName")
+    .textContent = product.name;
+
+document.getElementById("productVersion")
+    .textContent = product.version;
+
+document.getElementById("total")
+    .textContent =
+    "Total: " + product.displayPrice;
+
+document.getElementById("deliveryCity")
+    .textContent =
+    savedOrder?.city || "—";
+
+
+/* ==============================
+   PAYMENT
+============================== */
+
+document
+    .getElementById("payButton")
+    .addEventListener(
+        "click",
+        async function () {
+
+            const button =
+                document.getElementById(
+                    "payButton"
+                );
+
+            const message =
+                document.getElementById(
+                    "paymentMessage"
+                );
+
+
+            button.disabled = true;
+
+            button.textContent =
+                "⏳ Saving Order...";
+
+
+            try {
+
+                const order = {
+
+                    orderId: orderId,
+
+                    product: product.name,
+
+                    version: product.version,
+
+                    price: product.price,
+
+                    /* CUSTOMER DETAILS */
+
+                    name:
+                        savedOrder?.name || "",
+
+                    phone:
+                        savedOrder?.phone || "",
+
+                    email:
+                        savedOrder?.email || "",
+
+                    address:
+                        savedOrder?.address || "",
+
+                    city:
+                        savedOrder?.city || "",
+
+                    state:
+                        savedOrder?.state || "",
+
+                    pincode:
+                        savedOrder?.pincode || "",
+
+                    paymentStatus:
+                        "Demo Paid",
+
+                    orderStatus:
+                        "Payment Completed"
+
+                };
+
+
+                /* Save locally */
+
+                localStorage.setItem(
+                    "ssrtOrder",
+                    JSON.stringify(order)
+                );
+
+
+                /* Save online */
+
+                await createSSRTOrder(order);
+
+
+                message.innerHTML =
+                    "<strong>✅ Order saved successfully!</strong>" +
+                    "<br><br>" +
+                    "Order ID: <strong>" +
+                    orderId +
+                    "</strong>";
+
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "order-confirmation.html?orderId=" +
+                            encodeURIComponent(
+                                orderId
+                            );
+
+                    },
+                    1000
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                button.disabled = false;
+
+                button.textContent =
+                    "✅ Complete Demo Payment";
+
+                message.innerHTML =
+                    "<strong>❌ Could not save order.</strong>" +
+                    "<br><br>" +
+                    "Check Firebase configuration and Firestore rules.";
 
             }
-        );
+
+        }
+    );
 
 </script>
 
