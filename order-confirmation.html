@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Confirmed | SSRT Rover</title>
+
+    <meta name="description"
+        content="SSRT Rover order confirmation.">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <h1>🚀 SSRT</h1>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="rover.html">Rover</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+</header>
+
+
+<main>
+
+    <section class="hero">
+
+        <p>SSRT ROVER</p>
+
+        <h2>🎉 Order Confirmed</h2>
+
+        <p>
+            Your demo payment has been completed.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <div class="cards">
+
+            <article class="card">
+
+                <h2>✅ Payment Completed</h2>
+
+                <p>
+                    Order ID:
+                    <strong id="orderId">
+                        SSRT-------
+                    </strong>
+                </p>
+
+                <p>
+                    Product:
+                    <strong id="productName">
+                        SSRT Rover
+                    </strong>
+                </p>
+
+                <p>
+                    Version:
+                    <strong id="productVersion">
+                        V1
+                    </strong>
+                </p>
+
+                <p>
+                    Amount:
+                    <strong id="amount">
+                        ₹2,000
+                    </strong>
+                </p>
+
+                <p>
+                    Payment Status:
+                    <strong>Demo Paid</strong>
+                </p>
+
+                <p>
+                    Order Status:
+                    <strong>Payment Completed</strong>
+                </p>
+
+            </article>
+
+
+            <article class="card">
+
+                <h2>📦 What's Next?</h2>
+
+                <p>
+                    Your order has been recorded locally
+                    for this demo.
+                </p>
+
+                <br>
+
+                <a
+                    href="projects.html"
+                    class="btn"
+                >
+                    ← Back to Rover Store
+                </a>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <p>SSRT ORDER SYSTEM</p>
+
+        <h2>🚧 Future Upgrade</h2>
+
+        <p>
+            Real payment gateway, online order database,
+            delivery tracking and admin order management
+            will be connected in the next stage.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>© 2026 Space Singh Researcher Team (SSRT)</p>
+</footer>
+
+
+<script>
+
+    const savedOrder =
+        JSON.parse(
+            localStorage.getItem("ssrtOrder")
+        ) || {};
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const orderId =
+        params.get("orderId") ||
+        savedOrder.orderId ||
+        "SSRT-------";
+
+
+    const products = {
+
+        v1: {
+            name: "SSRT Rover V1",
+            version: "V1",
+            price: "₹2,000"
+        },
+
+        v2: {
+            name: "SSRT Rover V2",
+            version: "V2",
+            price: "₹2,500"
+        },
+
+        v3: {
+            name: "SSRT Rover V3",
+            version: "V3",
+            price: "₹3,500"
+        }
+
+    };
+
+
+    const version =
+        savedOrder.version
+            ? savedOrder.version.toLowerCase()
+            : "v1";
+
+
+    const product =
+        products[version] || products.v1;
+
+
+    document.getElementById("orderId").textContent =
+        orderId;
+
+    document.getElementById("productName").textContent =
+        product.name;
+
+    document.getElementById("productVersion").textContent =
+        product.version;
+
+    document.getElementById("amount").textContent =
+        product.price;
+
+</script>
+
+</body>
+
+</html>
