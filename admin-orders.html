@@ -7,9 +7,6 @@
 
     <title>Admin Orders | SSRT</title>
 
-    <meta name="description"
-        content="SSRT Rover admin order dashboard.">
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -21,7 +18,6 @@
 
         <div>
             <a href="index.html">Home</a>
-            <a href="projects.html">Projects</a>
             <a href="projects.html">Rover Store</a>
             <a href="my-orders.html">My Orders</a>
             <a href="contact.html">Contact</a>
@@ -29,21 +25,13 @@
     </nav>
 </header>
 
-
 <main>
 
     <section class="hero">
-
         <p>SSRT ROVER</p>
-
         <h2>Admin Order Dashboard</h2>
-
-        <p>
-            Manage demo orders and update order status.
-        </p>
-
+        <p>Update the current demo order.</p>
     </section>
-
 
     <section>
 
@@ -51,7 +39,7 @@
 
             <article class="card">
 
-                <h2>📦 Current Order</h2>
+                <h2>📦 Order Details</h2>
 
                 <p>
                     Order ID:
@@ -80,13 +68,12 @@
 
             </article>
 
-
             <article class="card">
 
                 <h2>🚚 Update Status</h2>
 
                 <label for="status">
-                    Order Status
+                    Select New Status
                 </label>
 
                 <select id="status">
@@ -122,9 +109,8 @@
                 <button
                     class="btn"
                     id="updateButton"
-                    type="button"
-                >
-                    ✅ Update Order
+                    type="button">
+                    ✅ Update Status
                 </button>
 
                 <p id="message"></p>
@@ -135,35 +121,17 @@
 
     </section>
 
-
     <section id="noOrder" style="display:none;">
 
-        <p>SSRT ADMIN</p>
-
-        <h2>📭 No Demo Order Found</h2>
+        <h2>📭 No Order Found</h2>
 
         <p>
-            Complete a demo order first, then return here.
-        </p>
-
-    </section>
-
-
-    <section>
-
-        <p>ADMIN SYSTEM</p>
-
-        <h2>⚠️ Demo Mode</h2>
-
-        <p>
-            This dashboard currently uses browser localStorage.
-            It is not a secure real admin system.
+            Complete a demo order first.
         </p>
 
     </section>
 
 </main>
-
 
 <footer>
     <p>© 2026 Space Singh Researcher Team (SSRT)</p>
@@ -172,28 +140,36 @@
 
 <script>
 
-let order = null;
+function getOrder() {
 
-try {
+    try {
 
-    order =
-        JSON.parse(
+        return JSON.parse(
             localStorage.getItem("ssrtOrder")
         );
 
-} catch (error) {
+    } catch (error) {
 
-    order = null;
+        return null;
+
+    }
 
 }
 
 
-if (!order) {
+function showOrder() {
 
-    document.getElementById("noOrder")
-        .style.display = "block";
+    const order = getOrder();
 
-} else {
+    if (!order) {
+
+        document.getElementById("noOrder")
+            .style.display = "block";
+
+        return;
+
+    }
+
 
     document.getElementById("orderId")
         .textContent =
@@ -218,41 +194,66 @@ if (!order) {
         order.paymentStatus || "Pending";
 
 
-    const statusSelect =
-        document.getElementById("status");
-
-
-    statusSelect.value =
+    const currentStatus =
         order.orderStatus || "Order Placed";
 
 
-    document
-        .getElementById("updateButton")
-        .addEventListener("click", function () {
-
-            order.orderStatus =
-                statusSelect.value;
-
-            localStorage.setItem(
-                "ssrtOrder",
-                JSON.stringify(order)
-            );
-
-            document.getElementById("message")
-                .innerHTML =
-                "<strong>✅ Order status updated!</strong>" +
-                "<br><br>" +
-                "Current status: " +
-                "<strong>" +
-                order.orderStatus +
-                "</strong>";
-
-        });
+    document.getElementById("status").value =
+        currentStatus;
 
 }
+
+
+showOrder();
+
+
+document
+    .getElementById("updateButton")
+    .addEventListener("click", function () {
+
+        const order = getOrder();
+
+        if (!order) {
+
+            document.getElementById("message")
+                .textContent =
+                "No order found.";
+
+            return;
+
+        }
+
+
+        const newStatus =
+            document.getElementById("status").value;
+
+
+        order.orderStatus =
+            newStatus;
+
+
+        order.lastUpdated =
+            new Date().toLocaleString("en-IN");
+
+
+        localStorage.setItem(
+            "ssrtOrder",
+            JSON.stringify(order)
+        );
+
+
+        document.getElementById("message")
+            .innerHTML =
+            "✅ Status updated to <strong>" +
+            newStatus +
+            "</strong>";
+
+
+        showOrder();
+
+    });
 
 </script>
 
 </body>
-
 </html>
