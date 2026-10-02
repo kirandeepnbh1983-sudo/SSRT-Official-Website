@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Orders | SSRT</title>
+
+    <meta name="description"
+        content="SSRT Rover admin order dashboard.">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <h1>🚀 SSRT</h1>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="projects.html">Rover Store</a>
+            <a href="my-orders.html">My Orders</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+</header>
+
+
+<main>
+
+    <section class="hero">
+
+        <p>SSRT ROVER</p>
+
+        <h2>Admin Order Dashboard</h2>
+
+        <p>
+            Manage demo orders and update order status.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <div class="cards">
+
+            <article class="card">
+
+                <h2>📦 Current Order</h2>
+
+                <p>
+                    Order ID:
+                    <strong id="orderId">—</strong>
+                </p>
+
+                <p>
+                    Product:
+                    <strong id="product">—</strong>
+                </p>
+
+                <p>
+                    Version:
+                    <strong id="version">—</strong>
+                </p>
+
+                <p>
+                    Amount:
+                    <strong id="amount">—</strong>
+                </p>
+
+                <p>
+                    Payment:
+                    <strong id="payment">—</strong>
+                </p>
+
+            </article>
+
+
+            <article class="card">
+
+                <h2>🚚 Update Status</h2>
+
+                <label for="status">
+                    Order Status
+                </label>
+
+                <select id="status">
+
+                    <option value="Order Placed">
+                        Order Placed
+                    </option>
+
+                    <option value="Confirmed">
+                        Confirmed
+                    </option>
+
+                    <option value="Processing">
+                        Processing
+                    </option>
+
+                    <option value="Shipped">
+                        Shipped
+                    </option>
+
+                    <option value="Out for Delivery">
+                        Out for Delivery
+                    </option>
+
+                    <option value="Delivered">
+                        Delivered
+                    </option>
+
+                </select>
+
+                <br><br>
+
+                <button
+                    class="btn"
+                    id="updateButton"
+                    type="button"
+                >
+                    ✅ Update Order
+                </button>
+
+                <p id="message"></p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <section id="noOrder" style="display:none;">
+
+        <p>SSRT ADMIN</p>
+
+        <h2>📭 No Demo Order Found</h2>
+
+        <p>
+            Complete a demo order first, then return here.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <p>ADMIN SYSTEM</p>
+
+        <h2>⚠️ Demo Mode</h2>
+
+        <p>
+            This dashboard currently uses browser localStorage.
+            It is not a secure real admin system.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>© 2026 Space Singh Researcher Team (SSRT)</p>
+</footer>
+
+
+<script>
+
+let order = null;
+
+try {
+
+    order =
+        JSON.parse(
+            localStorage.getItem("ssrtOrder")
+        );
+
+} catch (error) {
+
+    order = null;
+
+}
+
+
+if (!order) {
+
+    document.getElementById("noOrder")
+        .style.display = "block";
+
+} else {
+
+    document.getElementById("orderId")
+        .textContent =
+        order.orderId || "—";
+
+    document.getElementById("product")
+        .textContent =
+        order.product || "—";
+
+    document.getElementById("version")
+        .textContent =
+        order.version || "—";
+
+    document.getElementById("amount")
+        .textContent =
+        "₹" +
+        Number(order.price || 0)
+            .toLocaleString("en-IN");
+
+    document.getElementById("payment")
+        .textContent =
+        order.paymentStatus || "Pending";
+
+
+    const statusSelect =
+        document.getElementById("status");
+
+
+    statusSelect.value =
+        order.orderStatus || "Order Placed";
+
+
+    document
+        .getElementById("updateButton")
+        .addEventListener("click", function () {
+
+            order.orderStatus =
+                statusSelect.value;
+
+            localStorage.setItem(
+                "ssrtOrder",
+                JSON.stringify(order)
+            );
+
+            document.getElementById("message")
+                .innerHTML =
+                "<strong>✅ Order status updated!</strong>" +
+                "<br><br>" +
+                "Current status: " +
+                "<strong>" +
+                order.orderStatus +
+                "</strong>";
+
+        });
+
+}
+
+</script>
+
+</body>
+
+</html>
