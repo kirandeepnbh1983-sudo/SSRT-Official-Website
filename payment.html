@@ -321,21 +321,24 @@ document
                 );
 
 
-            } catch (error) {
+          } catch (error) {
 
-                console.error(error);
+    console.error("Firebase Error:", error);
 
-                button.disabled = false;
+    button.disabled = false;
 
-                button.textContent =
-                    "✅ Complete Demo Payment";
+    button.textContent =
+        "✅ Complete Demo Payment";
 
-                message.innerHTML =
-                    "<strong>❌ Could not save order.</strong>" +
-                    "<br><br>" +
-                    "Check Firebase configuration and Firestore rules.";
+    message.innerHTML =
+        "<strong>❌ Order could not be saved.</strong>" +
+        "<br><br>" +
+        "<strong>Error:</strong> " +
+        (error.code || "unknown") +
+        "<br>" +
+        (error.message || "Unknown Firebase error.");
 
-            }
+}
 
         }
     );
