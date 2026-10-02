@@ -7,12 +7,6 @@
 
     <title>My Orders | SSRT Rover</title>
 
-    <meta name="description"
-        content="Track your SSRT Rover order.">
-
-    <meta name="author"
-        content="Space Singh Researcher Team">
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -24,8 +18,8 @@
 
         <div>
             <a href="index.html">Home</a>
-            <a href="projects.html">Projects</a>
-            <a href="rover.html">Rover</a>
+            <a href="projects.html">Rover Store</a>
+            <a href="my-orders.html">My Orders</a>
             <a href="contact.html">Contact</a>
         </div>
     </nav>
@@ -34,8 +28,6 @@
 
 <main>
 
-    <!-- HERO -->
-
     <section class="hero">
 
         <p>SSRT ROVER</p>
@@ -43,13 +35,11 @@
         <h2>My Orders</h2>
 
         <p>
-            View and track your latest SSRT Rover order.
+            Track your SSRT Rover order.
         </p>
 
     </section>
 
-
-    <!-- ORDER -->
 
     <section>
 
@@ -61,37 +51,27 @@
 
                 <p>
                     Order ID:
-                    <strong id="orderId">
-                        —
-                    </strong>
+                    <strong id="orderId">—</strong>
                 </p>
 
                 <p>
                     Product:
-                    <strong id="product">
-                        —
-                    </strong>
+                    <strong id="product">—</strong>
                 </p>
 
                 <p>
                     Version:
-                    <strong id="version">
-                        —
-                    </strong>
+                    <strong id="version">—</strong>
                 </p>
 
                 <p>
                     Amount:
-                    <strong id="amount">
-                        —
-                    </strong>
+                    <strong id="amount">—</strong>
                 </p>
 
                 <p>
                     Payment:
-                    <strong id="paymentStatus">
-                        —
-                    </strong>
+                    <strong id="paymentStatus">—</strong>
                 </p>
 
             </article>
@@ -99,24 +79,46 @@
 
             <article class="card">
 
-                <h2>🚚 Order Status</h2>
+                <h2>🚚 Current Status</h2>
 
-                <p>
-                    Current Status:
-                    <strong id="orderStatus">
-                        —
-                    </strong>
-                </p>
+                <h2 id="orderStatus">
+                    —
+                </h2>
 
                 <hr>
 
-                <p>1️⃣ Order Placed</p>
-                <p>2️⃣ Payment Completed</p>
-                <p>3️⃣ Confirmed</p>
-                <p>4️⃣ Processing</p>
-                <p>5️⃣ Shipped</p>
-                <p>6️⃣ Out for Delivery</p>
-                <p>7️⃣ Delivered</p>
+                <p>
+                    🟢 Order Placed
+                </p>
+
+                <p>
+                    🟢 Payment Completed
+                </p>
+
+                <p>
+                    🟡 Confirmed
+                </p>
+
+                <p>
+                    ⚙️ Processing
+                </p>
+
+                <p>
+                    📦 Shipped
+                </p>
+
+                <p>
+                    🚚 Out for Delivery
+                </p>
+
+                <p>
+                    ✅ Delivered
+                </p>
+
+                <p>
+                    Last Updated:
+                    <strong id="lastUpdated">—</strong>
+                </p>
 
             </article>
 
@@ -125,44 +127,21 @@
     </section>
 
 
-    <!-- NO ORDER -->
-
     <section id="noOrder" style="display:none;">
-
-        <p>SSRT ORDER SYSTEM</p>
 
         <h2>📭 No Order Found</h2>
 
         <p>
-            No SSRT Rover order was found on this browser.
+            No SSRT Rover order is saved in this browser.
         </p>
 
         <br>
 
-        <a href="projects.html" class="btn">
+        <a
+            href="projects.html"
+            class="btn">
             Go to Rover Store →
         </a>
-
-    </section>
-
-
-    <!-- INFO -->
-
-    <section>
-
-        <p>ORDER TRACKING</p>
-
-        <h2>ℹ️ About Tracking</h2>
-
-        <p>
-            This is currently a demo tracking system.
-            Order information is stored only in this browser.
-        </p>
-
-        <p>
-            A real online order database and courier
-            tracking system will be connected later.
-        </p>
 
     </section>
 
@@ -176,9 +155,7 @@
 
 <script>
 
-    /* ==============================
-       GET SAVED ORDER
-    ============================== */
+function loadOrder() {
 
     let order = null;
 
@@ -196,49 +173,74 @@
     }
 
 
-    /* ==============================
-       CHECK ORDER
-    ============================== */
-
     if (!order) {
 
         document.getElementById("noOrder")
             .style.display = "block";
 
-    } else {
-
-        /* ==============================
-           SHOW ORDER DATA
-        ============================== */
-
-        document.getElementById("orderId")
-            .textContent =
-            order.orderId || "—";
-
-        document.getElementById("product")
-            .textContent =
-            order.product || "—";
-
-        document.getElementById("version")
-            .textContent =
-            order.version || "—";
-
-        document.getElementById("amount")
-            .textContent =
-            "₹" + Number(order.price || 0).toLocaleString("en-IN");
-
-        document.getElementById("paymentStatus")
-            .textContent =
-            order.paymentStatus || "Pending";
-
-        document.getElementById("orderStatus")
-            .textContent =
-            order.orderStatus || "Order Placed";
+        return;
 
     }
+
+
+    document.getElementById("orderId")
+        .textContent =
+        order.orderId || "—";
+
+    document.getElementById("product")
+        .textContent =
+        order.product || "—";
+
+    document.getElementById("version")
+        .textContent =
+        order.version || "—";
+
+    document.getElementById("amount")
+        .textContent =
+        "₹" +
+        Number(order.price || 0)
+            .toLocaleString("en-IN");
+
+    document.getElementById("paymentStatus")
+        .textContent =
+        order.paymentStatus || "Pending";
+
+    document.getElementById("orderStatus")
+        .textContent =
+        order.orderStatus || "Order Placed";
+
+    document.getElementById("lastUpdated")
+        .textContent =
+        order.lastUpdated || "Not updated yet";
+
+}
+
+
+loadOrder();
+
+
+/*
+   Automatically refresh when
+   the page becomes active again.
+*/
+
+window.addEventListener(
+    "focus",
+    loadOrder
+);
+
+
+/*
+   Refresh every 2 seconds
+   while the page is open.
+*/
+
+setInterval(
+    loadOrder,
+    2000
+);
 
 </script>
 
 </body>
-
 </html>
