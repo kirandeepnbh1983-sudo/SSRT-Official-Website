@@ -33,12 +33,16 @@
 
 <main>
 
+    <!-- HERO -->
+
     <section class="hero">
         <p>SSRT ROVER</p>
         <h2>Checkout</h2>
-        <p>Complete your delivery details.</p>
+        <p>Enter your delivery details and continue to payment.</p>
     </section>
 
+
+    <!-- CHECKOUT -->
 
     <section>
 
@@ -53,57 +57,77 @@
                 <form id="checkoutForm">
 
                     <label for="name">Full Name</label>
+
                     <input
                         type="text"
                         id="name"
+                        name="name"
                         placeholder="Enter your full name"
                         required
                     >
 
+
                     <label for="phone">Phone Number</label>
+
                     <input
                         type="tel"
                         id="phone"
+                        name="phone"
                         placeholder="Enter your phone number"
                         required
                     >
 
+
                     <label for="email">Email</label>
+
                     <input
                         type="email"
                         id="email"
+                        name="email"
                         placeholder="Enter your email"
                         required
                     >
 
+
                     <label for="address">Delivery Address</label>
+
                     <textarea
                         id="address"
+                        name="address"
                         rows="4"
                         placeholder="House / Street / Area"
                         required
                     ></textarea>
 
+
                     <label for="city">City</label>
+
                     <input
                         type="text"
                         id="city"
+                        name="city"
                         placeholder="City"
                         required
                     >
 
+
                     <label for="state">State</label>
+
                     <input
                         type="text"
                         id="state"
+                        name="state"
                         placeholder="State"
                         required
                     >
 
+
                     <label for="pincode">PIN Code</label>
+
                     <input
                         type="text"
                         id="pincode"
+                        name="pincode"
                         placeholder="PIN Code"
                         required
                     >
@@ -153,10 +177,12 @@
 
                 <br>
 
+                <!-- IMPORTANT BUTTON -->
+
                 <button
-                    type="submit"
-                    form="checkoutForm"
+                    type="button"
                     class="btn"
+                    id="paymentButton"
                 >
                     Continue to Payment →
                 </button>
@@ -170,6 +196,8 @@
     </section>
 
 
+    <!-- SECURITY -->
+
     <section>
 
         <p>SSRT ORDER SYSTEM</p>
@@ -177,8 +205,7 @@
         <h2>🔒 Secure Checkout</h2>
 
         <p>
-            Your order details are used only for completing
-            the checkout process.
+            Payment will be completed on the next page.
         </p>
 
     </section>
@@ -193,123 +220,154 @@
 
 <script>
 
-const params = new URLSearchParams(
-    window.location.search
-);
+    /* ==============================
+       GET PRODUCT VERSION
+    ============================== */
 
-const version =
-    params.get("version") || "v1";
+    const params = new URLSearchParams(
+        window.location.search
+    );
 
-
-const products = {
-
-    v1: {
-        name: "SSRT Rover V1",
-        version: "V1",
-        price: 2000,
-        displayPrice: "₹2,000"
-    },
-
-    v2: {
-        name: "SSRT Rover V2",
-        version: "V2",
-        price: 2500,
-        displayPrice: "₹2,500"
-    },
-
-    v3: {
-        name: "SSRT Rover V3",
-        version: "V3",
-        price: 3500,
-        displayPrice: "₹3,500"
-    }
-
-};
+    const version =
+        params.get("version") || "v1";
 
 
-const product =
-    products[version] || products.v1;
+    /* ==============================
+       PRODUCTS
+    ============================== */
+
+    const products = {
+
+        v1: {
+            name: "SSRT Rover V1",
+            version: "V1",
+            price: 2000,
+            displayPrice: "₹2,000"
+        },
+
+        v2: {
+            name: "SSRT Rover V2",
+            version: "V2",
+            price: 2500,
+            displayPrice: "₹2,500"
+        },
+
+        v3: {
+            name: "SSRT Rover V3",
+            version: "V3",
+            price: 3500,
+            displayPrice: "₹3,500"
+        }
+
+    };
 
 
-// SHOW PRODUCT
+    /* ==============================
+       SELECT PRODUCT
+    ============================== */
 
-document.getElementById("orderProduct").textContent =
-    product.name;
-
-document.getElementById("orderVersion").textContent =
-    product.version;
-
-document.getElementById("orderPrice").textContent =
-    product.displayPrice;
-
-document.getElementById("orderTotal").textContent =
-    "Total: " + product.displayPrice;
+    const product =
+        products[version] || products.v1;
 
 
-// FORM SUBMIT
+    /* ==============================
+       SHOW PRODUCT
+    ============================== */
 
-document
-    .getElementById("checkoutForm")
-    .addEventListener("submit", function(event) {
+    document.getElementById("orderProduct").textContent =
+        product.name;
 
-        event.preventDefault();
+    document.getElementById("orderVersion").textContent =
+        product.version;
 
+    document.getElementById("orderPrice").textContent =
+        product.displayPrice;
 
-        // Temporary order ID
-        const orderNumber =
-            "SSRT-" +
-            Date.now()
-                .toString()
-                .slice(-6);
-
-
-        // Save basic order information locally
-        const order = {
-
-            orderId: orderNumber,
-
-            product: product.name,
-
-            version: product.version,
-
-            price: product.price,
-
-            name:
-                document.getElementById("name").value,
-
-            phone:
-                document.getElementById("phone").value,
-
-            email:
-                document.getElementById("email").value,
-
-            address:
-                document.getElementById("address").value,
-
-            city:
-                document.getElementById("city").value,
-
-            state:
-                document.getElementById("state").value,
-
-            pincode:
-                document.getElementById("pincode").value
-
-        };
+    document.getElementById("orderTotal").textContent =
+        "Total: " + product.displayPrice;
 
 
-        // Temporary browser storage
-        localStorage.setItem(
-            "ssrtOrder",
-            JSON.stringify(order)
-        );
+    /* ==============================
+       PAYMENT BUTTON
+    ============================== */
+
+    document
+        .getElementById("paymentButton")
+        .addEventListener("click", function () {
+
+            const form =
+                document.getElementById("checkoutForm");
+
+            /* Check required fields */
+
+            if (!form.checkValidity()) {
+
+                form.reportValidity();
+
+                return;
+            }
 
 
-        // Continue to payment
-        window.location.href =
-            "payment.html?version=" + version;
+            /* Create temporary Order ID */
 
-    });
+            const orderNumber =
+                "SSRT-" +
+                Date.now()
+                    .toString()
+                    .slice(-6);
+
+
+            /* Save temporary order */
+
+            const order = {
+
+                orderId: orderNumber,
+
+                product: product.name,
+
+                version: product.version,
+
+                price: product.price,
+
+                name:
+                    document.getElementById("name").value,
+
+                phone:
+                    document.getElementById("phone").value,
+
+                email:
+                    document.getElementById("email").value,
+
+                address:
+                    document.getElementById("address").value,
+
+                city:
+                    document.getElementById("city").value,
+
+                state:
+                    document.getElementById("state").value,
+
+                pincode:
+                    document.getElementById("pincode").value
+
+            };
+
+
+            /* Save in browser temporarily */
+
+            localStorage.setItem(
+                "ssrtOrder",
+                JSON.stringify(order)
+            );
+
+
+            /* Go to payment page */
+
+            window.location.href =
+                "./payment.html?version=" +
+                encodeURIComponent(version);
+
+        });
 
 </script>
 
