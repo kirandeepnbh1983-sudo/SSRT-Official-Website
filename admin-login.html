@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | SSRT</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <h1>🚀 SSRT</h1>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Rover Store</a>
+            <a href="my-orders.html">My Orders</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+</header>
+
+
+<main>
+
+    <section class="hero">
+
+        <p>SSRT ADMIN</p>
+
+        <h2>Admin Login</h2>
+
+        <p>Authorized SSRT administrators only.</p>
+
+    </section>
+
+
+    <section>
+
+        <div class="cards">
+
+            <article class="card">
+
+                <h2>🔐 Sign In</h2>
+
+                <form id="loginForm">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Admin email"
+                        required
+                    >
+
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        required
+                    >
+
+                    <br><br>
+
+                    <button
+                        class="btn"
+                        type="submit"
+                        id="loginButton">
+
+                        Login →
+
+                    </button>
+
+                </form>
+
+                <p id="message"></p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>© 2026 Space Singh Researcher Team (SSRT)</p>
+</footer>
+
+
+<script type="module">
+
+import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+    getAuth,
+    signInWithEmailAndPassword
+}
+from
+    "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import firebaseConfig
+    from "./firebase-config.js";
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+
+document
+    .getElementById("loginForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const email =
+                document.getElementById(
+                    "email"
+                ).value.trim();
+
+
+            const password =
+                document.getElementById(
+                    "password"
+                ).value;
+
+
+            const button =
+                document.getElementById(
+                    "loginButton"
+                );
+
+
+            const message =
+                document.getElementById(
+                    "message"
+                );
+
+
+            button.disabled = true;
+
+            button.textContent =
+                "⏳ Signing in...";
+
+
+            try {
+
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+                message.innerHTML =
+                    "<strong>✅ Login successful!</strong>" +
+                    "<br><br>" +
+                    "Opening Admin Dashboard...";
+
+
+                setTimeout(
+                    function() {
+
+                        window.location.href =
+                            "admin-orders.html";
+
+                    },
+                    700
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Login error:",
+                    error
+                );
+
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Login →";
+
+
+                message.innerHTML =
+                    "<strong>❌ Login failed.</strong>" +
+                    "<br><br>" +
+                    "Please check your email and password.";
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
