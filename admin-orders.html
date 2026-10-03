@@ -194,9 +194,8 @@ const db =
    Firebase admin account here.
 */
 
-const ADMIN_EMAIL =
-    "ssrtofficial22@gmail.com";
-
+const ADMIN_UID =
+    "BCCw3jX4ypV1hsVIma0WvQEoMZX2";
 
 /* ==============================
    ELEMENTS
@@ -272,10 +271,7 @@ onAuthStateChanged(
            the actual database.
         */
 
-        if (
-            user.email.toLowerCase() !==
-            ADMIN_EMAIL.toLowerCase()
-        ) {
+       if (user.uid !== ADMIN_UID) {
 
             alert(
                 "You are not authorized as an admin."
