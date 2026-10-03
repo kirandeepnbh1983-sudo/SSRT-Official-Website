@@ -8,6 +8,53 @@
     <title>Admin Orders | SSRT</title>
 
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .admin-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .order-card {
+            margin-bottom: 20px;
+        }
+
+        .order-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .order-field {
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .order-field strong {
+            display: block;
+            margin-top: 4px;
+        }
+
+        .status-select {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .small-btn {
+            margin-top: 10px;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,233 +72,661 @@
     </nav>
 </header>
 
+
 <main>
 
     <section class="hero">
-        <p>SSRT ROVER</p>
-        <h2>Admin Order Dashboard</h2>
-        <p>Update the current demo order.</p>
+
+        <p>SSRT ADMIN</p>
+
+        <h2>Order Management</h2>
+
+        <p>
+            Manage all SSRT Rover orders.
+        </p>
+
     </section>
+
 
     <section>
 
-        <div class="cards">
+        <div class="admin-toolbar">
 
-            <article class="card">
+            <div>
+                <strong id="adminEmail">
+                    Checking admin...
+                </strong>
 
-                <h2>📦 Order Details</h2>
-
-                <p>
-                    Order ID:
-                    <strong id="orderId">—</strong>
+                <p id="orderCount">
+                    Loading orders...
                 </p>
+            </div>
 
-                <p>
-                    Product:
-                    <strong id="product">—</strong>
-                </p>
+            <button
+                class="btn"
+                id="logoutButton"
+                type="button">
+                Logout
+            </button>
 
-                <p>
-                    Version:
-                    <strong id="version">—</strong>
-                </p>
+        </div>
 
-                <p>
-                    Amount:
-                    <strong id="amount">—</strong>
-                </p>
 
-                <p>
-                    Payment:
-                    <strong id="payment">—</strong>
-                </p>
+        <div id="loadingMessage">
+            Loading all orders...
+        </div>
 
-            </article>
 
-            <article class="card">
+        <div id="ordersContainer"></div>
 
-                <h2>🚚 Update Status</h2>
 
-                <label for="status">
-                    Select New Status
-                </label>
+        <div
+            id="emptyMessage"
+            class="empty-message"
+            style="display:none;">
 
-                <select id="status">
+            <h2>📭 No Orders</h2>
 
-                    <option value="Order Placed">
-                        Order Placed
-                    </option>
-
-                    <option value="Confirmed">
-                        Confirmed
-                    </option>
-
-                    <option value="Processing">
-                        Processing
-                    </option>
-
-                    <option value="Shipped">
-                        Shipped
-                    </option>
-
-                    <option value="Out for Delivery">
-                        Out for Delivery
-                    </option>
-
-                    <option value="Delivered">
-                        Delivered
-                    </option>
-
-                </select>
-
-                <br><br>
-
-                <button
-                    class="btn"
-                    id="updateButton"
-                    type="button">
-                    ✅ Update Status
-                </button>
-
-                <p id="message"></p>
-
-            </article>
+            <p>
+                No orders have been created yet.
+            </p>
 
         </div>
 
     </section>
 
-    <section id="noOrder" style="display:none;">
-
-        <h2>📭 No Order Found</h2>
-
-        <p>
-            Complete a demo order first.
-        </p>
-
-    </section>
-
 </main>
+
 
 <footer>
     <p>© 2026 Space Singh Researcher Team (SSRT)</p>
 </footer>
 
 
-<script>
+<script type="module">
 
-function getOrder() {
+import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-    try {
-
-        return JSON.parse(
-            localStorage.getItem("ssrtOrder")
-        );
-
-    } catch (error) {
-
-        return null;
-
-    }
-
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
 }
+from
+    "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-
-function showOrder() {
-
-    const order = getOrder();
-
-    if (!order) {
-
-        document.getElementById("noOrder")
-            .style.display = "block";
-
-        return;
-
-    }
-
-
-    document.getElementById("orderId")
-        .textContent =
-        order.orderId || "—";
-
-    document.getElementById("product")
-        .textContent =
-        order.product || "—";
-
-    document.getElementById("version")
-        .textContent =
-        order.version || "—";
-
-    document.getElementById("amount")
-        .textContent =
-        "₹" +
-        Number(order.price || 0)
-            .toLocaleString("en-IN");
-
-    document.getElementById("payment")
-        .textContent =
-        order.paymentStatus || "Pending";
-
-
-    const currentStatus =
-        order.orderStatus || "Order Placed";
-
-
-    document.getElementById("status").value =
-        currentStatus;
-
+import {
+    getFirestore,
+    collection,
+    onSnapshot,
+    doc,
+    updateDoc
 }
+from
+    "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+import firebaseConfig
+    from "./firebase-config.js";
 
 
-showOrder();
+/* ==============================
+   FIREBASE
+============================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
 
 
-document
-    .getElementById("updateButton")
-    .addEventListener("click", function () {
+/* ==============================
+   ADMIN EMAIL
+============================== */
 
-        const order = getOrder();
+/*
+   IMPORTANT:
+   Put the EXACT email of your
+   Firebase admin account here.
+*/
 
-        if (!order) {
+const ADMIN_EMAIL =
+    "YOUR_ADMIN_EMAIL_HERE";
 
-            document.getElementById("message")
-                .textContent =
-                "No order found.";
+
+/* ==============================
+   ELEMENTS
+============================== */
+
+const ordersContainer =
+    document.getElementById(
+        "ordersContainer"
+    );
+
+const loadingMessage =
+    document.getElementById(
+        "loadingMessage"
+    );
+
+const emptyMessage =
+    document.getElementById(
+        "emptyMessage"
+    );
+
+const orderCount =
+    document.getElementById(
+        "orderCount"
+    );
+
+const adminEmail =
+    document.getElementById(
+        "adminEmail"
+    );
+
+
+/* ==============================
+   STATUS OPTIONS
+============================== */
+
+const statusOptions = [
+
+    "Order Placed",
+
+    "Confirmed",
+
+    "Processing",
+
+    "Shipped",
+
+    "Out for Delivery",
+
+    "Delivered"
+
+];
+
+
+/* ==============================
+   AUTH CHECK
+============================== */
+
+onAuthStateChanged(
+    auth,
+    function(user) {
+
+        if (!user) {
+
+            window.location.href =
+                "admin-login.html";
+
+            return;
+        }
+
+
+        /*
+           Client-side check.
+           Firestore Rules also protect
+           the actual database.
+        */
+
+        if (
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            alert(
+                "You are not authorized as an admin."
+            );
+
+            signOut(auth);
 
             return;
 
         }
 
 
-        const newStatus =
-            document.getElementById("status").value;
+        adminEmail.textContent =
+            "Logged in: " + user.email;
 
 
-        order.orderStatus =
-            newStatus;
+        startOrdersListener();
+
+    }
+);
 
 
-        order.lastUpdated =
-            new Date().toLocaleString("en-IN");
+/* ==============================
+   LOAD ALL ORDERS
+============================== */
+
+function startOrdersListener() {
+
+    const ordersRef =
+        collection(db, "orders");
 
 
-        localStorage.setItem(
-            "ssrtOrder",
-            JSON.stringify(order)
+    onSnapshot(
+        ordersRef,
+        function(snapshot) {
+
+            loadingMessage.style.display =
+                "none";
+
+
+            ordersContainer.innerHTML =
+                "";
+
+
+            if (snapshot.empty) {
+
+                emptyMessage.style.display =
+                    "block";
+
+                orderCount.textContent =
+                    "0 orders";
+
+                return;
+            }
+
+
+            emptyMessage.style.display =
+                "none";
+
+
+            orderCount.textContent =
+                snapshot.size +
+                (
+                    snapshot.size === 1
+                        ? " order"
+                        : " orders"
+                );
+
+
+            const orders = [];
+
+
+            snapshot.forEach(
+                function(docSnap) {
+
+                    orders.push({
+
+                        id: docSnap.id,
+
+                        data:
+                            docSnap.data()
+
+                    });
+
+                }
+            );
+
+
+            /*
+               Newest first when a timestamp
+               is available.
+            */
+
+            orders.sort(
+                function(a, b) {
+
+                    const aTime =
+                        a.data.createdAt?.toMillis?.()
+                        || 0;
+
+                    const bTime =
+                        b.data.createdAt?.toMillis?.()
+                        || 0;
+
+                    return bTime - aTime;
+
+                }
+            );
+
+
+            orders.forEach(
+                function(order) {
+
+                    createOrderCard(order);
+
+                }
+            );
+
+        },
+
+        function(error) {
+
+            console.error(
+                "Firestore listener error:",
+                error
+            );
+
+            loadingMessage.innerHTML =
+                "<strong>❌ Could not load orders.</strong>" +
+                "<br><br>" +
+                "Check your Firestore Rules and admin account.";
+
+        }
+    );
+
+}
+
+
+/* ==============================
+   CREATE ORDER CARD
+============================== */
+
+function createOrderCard(order) {
+
+    const data =
+        order.data;
+
+
+    const card =
+        document.createElement(
+            "article"
+        );
+
+    card.className =
+        "card order-card";
+
+
+    const currentStatus =
+        data.orderStatus ||
+        "Order Placed";
+
+
+    const amount =
+        Number(
+            data.price || 0
+        ).toLocaleString(
+            "en-IN"
         );
 
 
-        document.getElementById("message")
-            .innerHTML =
-            "✅ Status updated to <strong>" +
-            newStatus +
-            "</strong>";
+    card.innerHTML = `
+
+        <h2>
+            📦 ${escapeHTML(
+                data.product || "SSRT Rover"
+            )}
+        </h2>
+
+        <p>
+            Order ID:
+            <strong>
+                ${escapeHTML(
+                    data.orderId || order.id
+                )}
+            </strong>
+        </p>
 
 
-        showOrder();
+        <div class="order-grid">
 
-    });
+            <div class="order-field">
+                Customer
+                <strong>
+                    ${escapeHTML(data.name || "—")}
+                </strong>
+            </div>
+
+
+            <div class="order-field">
+                Phone
+                <strong>
+                    ${escapeHTML(data.phone || "—")}
+                </strong>
+            </div>
+
+
+            <div class="order-field">
+                Email
+                <strong>
+                    ${escapeHTML(data.email || "—")}
+                </strong>
+            </div>
+
+
+            <div class="order-field">
+                Product
+                <strong>
+                    ${escapeHTML(data.version || "—")}
+                </strong>
+            </div>
+
+
+            <div class="order-field">
+                Amount
+                <strong>
+                    ₹${amount}
+                </strong>
+            </div>
+
+
+            <div class="order-field">
+                Payment
+                <strong>
+                    ${escapeHTML(
+                        data.paymentStatus || "Pending"
+                    )}
+                </strong>
+            </div>
+
+
+            <div class="order-field">
+                City
+                <strong>
+                    ${escapeHTML(data.city || "—")}
+                </strong>
+            </div>
+
+
+            <div class="order-field">
+                State
+                <strong>
+                    ${escapeHTML(data.state || "—")}
+                </strong>
+            </div>
+
+
+            <div class="order-field">
+                PIN Code
+                <strong>
+                    ${escapeHTML(data.pincode || "—")}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="order-field" style="margin-top:10px;">
+            Delivery Address
+            <strong>
+                ${escapeHTML(data.address || "—")}
+            </strong>
+        </div>
+
+
+        <br>
+
+        <label>
+            Order Status
+        </label>
+
+
+        <select
+            class="status-select"
+            data-order-id="${order.id}">
+
+            ${statusOptions.map(
+                function(status) {
+
+                    return `
+                        <option
+                            value="${status}"
+                            ${
+                                status === currentStatus
+                                    ? "selected"
+                                    : ""
+                            }>
+                            ${status}
+                        </option>
+                    `;
+
+                }
+            ).join("")}
+
+        </select>
+
+
+        <button
+            class="btn small-btn update-status"
+            data-order-id="${order.id}"
+            type="button">
+
+            ✅ Update Status
+
+        </button>
+
+
+        <p
+            class="update-message"
+            data-message-for="${order.id}">
+        </p>
+
+    `;
+
+
+    ordersContainer.appendChild(card);
+
+}
+
+
+/* ==============================
+   UPDATE STATUS
+============================== */
+
+ordersContainer.addEventListener(
+    "click",
+    async function(event) {
+
+        const button =
+            event.target.closest(
+                ".update-status"
+            );
+
+
+        if (!button) {
+            return;
+        }
+
+
+        const orderId =
+            button.dataset.orderId;
+
+
+        const select =
+            document.querySelector(
+                `.status-select[data-order-id="${orderId}"]`
+            );
+
+
+        const message =
+            document.querySelector(
+                `.update-message[data-message-for="${orderId}"]`
+            );
+
+
+        const newStatus =
+            select.value;
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "⏳ Updating...";
+
+
+        try {
+
+            await updateDoc(
+                doc(
+                    db,
+                    "orders",
+                    orderId
+                ),
+                {
+                    orderStatus:
+                        newStatus
+                }
+            );
+
+
+            message.innerHTML =
+                "<strong>✅ Updated successfully.</strong>";
+
+
+        } catch (error) {
+
+            console.error(
+                "Status update error:",
+                error
+            );
+
+
+            message.innerHTML =
+                "<strong>❌ Update failed.</strong>" +
+                "<br>" +
+                error.message;
+
+        }
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "✅ Update Status";
+
+    }
+);
+
+
+/* ==============================
+   LOGOUT
+============================== */
+
+document
+    .getElementById("logoutButton")
+    .addEventListener(
+        "click",
+        async function() {
+
+            await signOut(auth);
+
+            window.location.href =
+                "admin-login.html";
+
+        }
+    );
+
+
+/* ==============================
+   HTML SAFETY
+============================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
 
 </script>
 
